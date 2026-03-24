@@ -1,6 +1,5 @@
-# [WORKSHOP TITLE] - Slide Deck Content
+# [Workshop Title] - Slide Deck Content
 
-> CUNY AI Lab Sandbox Workshop
 > Source: `index.html`
 
 ---
@@ -8,7 +7,7 @@
 ## Slide 1 - Title
 
 **[Workshop Title]**
-[A Workshop for the CUNY AI Lab Sandbox]
+[Workshop Subtitle]
 [Date]
 
 ---

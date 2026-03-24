@@ -1305,6 +1305,23 @@ body.overview-mode #nav-bar { display: none; }
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
+.title-slide .title-logo-placeholder {
+  height: clamp(50px, 8vh, 80px);
+  min-width: clamp(120px, 20vw, 220px);
+  margin-bottom: clamp(24px, 4vh, 48px);
+  position: relative;
+  border: 2px dashed rgba(226, 232, 240, 0.25);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  color: rgba(226, 232, 240, 0.35);
+  letter-spacing: 0.05em;
+  padding: clamp(10px, 1.5vh, 18px) clamp(20px, 3vw, 36px);
+}
+
 .title-slide h1 {
   color: var(--light-text);
   font-family: 'Fraunces', Georgia, serif;

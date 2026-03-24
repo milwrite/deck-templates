@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#0f1319" />
+  <title>[Workshop Title]</title>
+  <style>
+/* ══════════════════════════════════════════════
+   deck-templates · template-zmuhls
+   Dark two-panel theme · system font stack
+   Based on zmuhls/cuny-ai-intro visual style
+   ══════════════════════════════════════════════ */
+
+:root {
+  --bg:          #0f1319;
+  --fg:          rgba(218,225,232,0.92);
+  --muted:       rgba(190,200,215,0.55);
+  --accent:      #8aa8c7;
+  --part:        #8b9bb5;
+  --card:        rgba(180,200,220,0.055);
+  --stroke:      rgba(180,200,220,0.13);
+  --radius:      14px;
+  --header-h:    48px;
+  --footer-h:    54px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--fg); overflow: hidden; touch-action: manipulation; }
+body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+a:hover { text-decoration: underline; }
+
+/* ── SKIP LINK ── */
+.skip-link {
+  position: absolute; top: -100px; left: 12px; z-index: 100;
+  padding: 8px 16px; background: var(--accent); color: #000;
+  border-radius: 6px; font-size: 14px; font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+/* ── LIVE REGION (screen readers) ── */
+#announcer { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+/* ── HEADER ── */
+header {
+  position: fixed; inset: 0 0 auto 0; height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  background: linear-gradient(to bottom, rgba(15,19,25,.72), transparent);
+  z-index: 20; pointer-events: none;
+}
+header .bar { pointer-events: auto; display: flex; align-items: center; gap: 8px; }
+.kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  border: 1px solid rgba(180,200,220,0.08); background: transparent;
+  padding: 2px 7px; border-radius: 6px; font-size: 11px; opacity: 0.45; color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── STICKY FOOTER SLIDER ── */
+.sticky-footer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+  background: linear-gradient(to top, rgba(15,19,25,.97), rgba(15,19,25,.5) 60%, transparent);
+  padding: 10px 16px 12px; pointer-events: none;
+  backdrop-filter: blur(12px);
+}
+.footer-slider {
+  max-width: 760px; margin: 0 auto; pointer-events: auto;
+  display: flex; flex-direction: row; gap: 10px; align-items: center;
+}
+.footer-arrow {
+  display: inline-flex; width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 6px; border: 1px solid rgba(180,200,220,0.10);
+  background: rgba(180,200,220,0.04); color: var(--muted);
+  cursor: pointer; align-items: center; justify-content: center;
+  font-size: 13px; transition: background 0.15s, opacity 0.15s; opacity: 0.7;
+}
+.footer-arrow:hover { background: rgba(180,200,220,0.09); opacity: 1; }
+.footer-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.footer-meta {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-size: 12px; color: rgba(180,200,220,0.45); font-variant-numeric: tabular-nums;
+}
+.slider-track {
+  position: relative; flex: 1; height: 3px;
+  background: rgba(180,200,220,0.10);
+  border-radius: 2px; overflow: visible;
+}
+.slider-progress {
+  position: absolute; top: 0; left: 0; height: 100%;
+  background: rgba(180,200,220,0.55);
+  width: 5%; transition: width 0.2s ease; border-radius: 2px;
+}
+.slider-thumb {
+  position: absolute; top: -5px; width: 13px; height: 13px;
+  left: calc(5% - 6px); border-radius: 50%; pointer-events: none;
+  background: rgba(180,200,220,0.80);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  transition: left 0.2s ease, transform 0.15s ease; z-index: 2;
+}
+.slider-track:hover .slider-thumb { transform: scale(1.2); }
+#slide-scrubber {
+  position: absolute; top: -10px; left: 0; width: 100%; height: 23px;
+  opacity: 0; cursor: grab; margin: 0;
+  -webkit-appearance: none; appearance: none; touch-action: manipulation;
+}
+#slide-scrubber:active { cursor: grabbing; }
+#slide-scrubber::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: transparent; cursor: grab; }
+#slide-scrubber::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: transparent; cursor: grab; border: none; }
+@media (pointer: coarse) {
+  .slider-track { height: 6px; border-radius: 3px; }
+  .slider-thumb { width: 22px; height: 22px; top: -8px; left: calc(5% - 11px); }
+  #slide-scrubber { height: 48px; top: -21px; }
+  #slide-scrubber::-webkit-slider-thumb { width: 44px; height: 44px; }
+  #slide-scrubber::-moz-range-thumb { width: 44px; height: 44px; }
+  .footer-arrow { width: 36px; height: 36px; font-size: 15px; }
+}
+@media (max-width: 600px) {
+  .sticky-footer { padding: 8px 10px 10px; }
+  .footer-meta .kbd { display: none; }
+}
+
+/* ── SLIDE HOST ── */
+main { height: 100%; position: relative; }
+
+section.slide {
+  display: none; position: absolute; inset: 0;
+  flex-direction: column;
+  padding: var(--header-h) 12px calc(12px + var(--footer-h)); gap: 10px;
+  overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+section.slide.active { display: flex; }
+
+/* ── CONTENT PANEL ── */
+.content {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: clamp(28px,4vw,48px) clamp(24px,3.5vw,44px);
+  border-radius: 16px;
+  border: 1px solid rgba(180,200,220,0.05);
+  background: rgba(180,200,220,0.025);
+  backdrop-filter: blur(6px);
+  min-height: 120px;
+}
+.content:focus { outline: none; }
+
+/* ── STAGE PANEL ── */
+.stage {
+  flex: 0 0 auto; position: relative; width: 100%;
+  height: auto; min-height: 160px;
+  border-radius: 16px;
+  border: 1px solid rgba(180,200,220,0.05);
+  background: #080b10; overflow: hidden;
+}
+
+/* ── TYPOGRAPHY ── */
+.content h1 { font-size: clamp(42px,6vw,68px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
+.content h2 { font-size: clamp(24px,3vw,38px); color: var(--muted); font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+.content .label { font-size: clamp(16px,2vw,24px); letter-spacing: 0.12em; text-transform: uppercase; color: var(--part); font-weight: 700; margin-bottom: 10px; }
+.content .date { font-size: clamp(16px,1.7vw,21px); color: var(--muted); opacity: 0.75; margin-top: 18px; }
+.content p { font-size: clamp(16px,1.7vw,21px); color: var(--muted); line-height: 1.6; margin-top: 10px; }
+
+/* ── TITLE SLIDE ── */
+[data-slide="title"] .content {
+  flex: 0 0 auto; overflow: visible;
+  padding-top: clamp(36px,5vw,72px);
+  padding-bottom: clamp(20px,2.5vw,32px);
+}
+.title-credit {
+  margin-top: auto;
+  padding-top: clamp(16px,2vw,24px);
+  border-top: 1px solid rgba(180,200,220,0.07);
+  display: flex; align-items: center; gap: clamp(16px,2vw,24px);
+}
+.title-credit .credit-names {
+  font-size: clamp(13px,1.25vw,15px); color: var(--muted);
+  opacity: 0.75; line-height: 1.5; letter-spacing: 0.005em;
+}
+[data-slide="title"] .stage {
+  flex: 1 1 auto; min-height: clamp(280px, 55vh, 680px);
+  background: transparent; border-color: transparent;
+  border-radius: 0; overflow: hidden;
+}
+
+/* Stage fill helpers */
+.stage-fill { position: absolute; inset: 0; }
+.stage-fill iframe, .stage-fill canvas, .stage-fill video { width: 100%; height: 100%; border: none; display: block; }
+
+/* ── STEP GRID (fragments) ── */
+.step-grid {
+  position: relative; width: 100%;
+  display: flex; flex-direction: column; gap: 6px; justify-content: center;
+  padding: clamp(12px,2vw,24px);
+}
+.step-row {
+  display: flex; gap: 12px; align-items: center; padding: 12px 14px;
+  border-bottom: 1px solid rgba(180,200,220,0.06);
+}
+.step-row:last-child { border-bottom: none; }
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--part); color: #fff; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+}
+.step-text { font-size: clamp(19px,2.4vw,28px); color: rgba(218,225,232,0.86); line-height: 1.45; }
+
+/* ── FRAGMENT REVEAL ── */
+.frag {
+  opacity: 0; transform: translateY(5px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+.frag.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+/* ── SIDE-BY-SIDE COMPARE ── */
+.stageCompare {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  align-items: stretch;
+}
+.stageCompare .col {
+  padding: clamp(24px,3.5vw,44px) clamp(20px,2.8vw,36px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.stageCompare .col + .col { border-left: 1px solid rgba(180,200,220,0.08); }
+.stageCompare .col-tag {
+  display: inline-block; margin-bottom: 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--part);
+}
+.stageCompare .col-title {
+  font-weight: 700; letter-spacing: -0.01em;
+  font-size: clamp(20px,2.4vw,28px);
+  margin-bottom: 12px; color: rgba(218,225,232,0.9);
+}
+.stageCompare .col-sub {
+  font-size: clamp(16px,1.9vw,22px);
+  color: var(--muted); line-height: 1.55; opacity: 0.85;
+}
+
+/* ── SECTION BREAK ── */
+.slide-break.active {
+  align-items: flex-start; justify-content: flex-end; overflow: hidden;
+  padding-bottom: clamp(32px,5vw,60px); padding-left: clamp(20px,5vw,80px);
+  background: linear-gradient(140deg, #131a24 0%, var(--bg) 65%);
+}
+.slide-break .content { background: transparent; border: none; justify-content: flex-end; min-height: unset; }
+.slide-break .content .break-tag {
+  font-size: clamp(18px,2.4vw,28px); letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--part); font-weight: 700; margin-bottom: 12px;
+}
+.slide-break .content h1 { font-size: clamp(42px,8vw,92px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.04; }
+.slide-break::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--part); }
+
+/* ── RESOURCES LIST ── */
+.res-wrap { position: relative; width: 100%; padding: clamp(10px,1.5vw,20px) clamp(14px,2vw,24px); overflow-y: auto; }
+.res-group { margin-bottom: clamp(12px,2vw,20px); }
+.res-group:last-child { margin-bottom: 0; }
+.res-group-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--part); opacity: 0.8; padding: 0 14px 6px;
+  border-bottom: 1px solid rgba(180,200,220,0.08); margin-bottom: 2px;
+}
+.res-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.res-list li { padding: 8px 14px; border-bottom: 1px solid rgba(180,200,220,0.05); }
+.res-list li:last-child { border-bottom: none; }
+.res-list li a { font-size: clamp(15px,1.7vw,20px); color: var(--accent); text-decoration: none; }
+.res-list li a:hover { text-decoration: underline; }
+.res-desc { font-size: clamp(13px,1.3vw,15px); color: var(--muted); margin-top: 2px; opacity: 0.65; }
+
+/* ── INLINE CODE ── */
+.stage code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgba(180,200,220,0.08);
+  padding: 1px 6px; border-radius: 4px; font-size: 0.88em;
+}
+
+/* ── TABLET / DESKTOP: side-by-side layout ── */
+@media (min-width: 720px) {
+  section.slide {
+    flex-direction: row; align-items: stretch; overflow: hidden;
+    padding: var(--header-h) clamp(16px,2.5vw,32px) calc(16px + var(--footer-h));
+    gap: clamp(12px,1.5vw,20px);
+  }
+  .content { flex: 1 1 44%; overflow-y: auto; }
+  .stage { flex: 1 1 52%; height: auto; align-self: stretch; min-height: unset; }
+
+  /* title slide stays stacked */
+  [data-slide="title"] { flex-direction: column; }
+  [data-slide="title"] .content { flex: 0 0 auto; overflow: visible; max-width: 600px; margin: 0 auto; }
+  [data-slide="title"] .stage { flex: 1 1 auto; min-height: clamp(340px, 62vh, 800px); }
+
+  /* section break stays stacked */
+  .slide-break.active { flex-direction: column; overflow: hidden; }
+
+  /* absolute-position stage inner elements */
+  .stageCompare { position: absolute; inset: 0; width: auto; overflow-y: auto; }
+  .step-grid { position: absolute; inset: clamp(12px,2vw,24px); width: auto; overflow-y: auto; }
+  .res-wrap { position: absolute; inset: 0; width: auto; overflow-y: auto; }
+
+  #kbdSwipe { display: none; }
+}
+@media (min-width: 720px) and (max-width: 870px) {
+  [data-slide="title"] .content { max-width: none; width: 100%; }
+  [data-slide="title"] .stage { min-height: 40vh; }
+}
+@media (min-width: 1024px) {
+  [data-slide="title"] .stage { min-height: clamp(400px, 65vh, 900px); }
+}
+@media (min-width: 1200px) {
+  section.slide { padding: var(--header-h) clamp(28px,3vw,48px) calc(20px + var(--footer-h)); gap: clamp(16px,2vw,28px); }
+  [data-slide="title"] .content { max-width: 700px; }
+}
+@media (max-width: 480px) {
+  [data-slide="title"] .stage { min-height: clamp(240px, 50vh, 500px); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ── OVERVIEW MODE ── */
+body.overview { overflow: auto; }
+body.overview header { position: sticky; background: var(--bg); }
+body.overview main {
+  position: static; height: auto;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px; padding: 16px;
+}
+body.overview section.slide {
+  display: flex !important; position: relative; inset: auto;
+  flex-direction: column; aspect-ratio: 16 / 10; overflow: hidden;
+  border-radius: 12px; border: 2px solid var(--stroke);
+  background: var(--card); cursor: pointer; padding: 14px; gap: 4px;
+  transition: border-color 0.15s, transform 0.15s;
+}
+body.overview section.slide:hover { border-color: rgba(180,200,220,0.25); transform: translateY(-2px); }
+body.overview section.slide.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 4px 20px rgba(138,168,199,0.12); }
+body.overview section.slide::after {
+  content: attr(data-slide-num);
+  position: absolute; top: 8px; right: 10px;
+  font-size: 11px; font-weight: 700; color: var(--muted); opacity: 0.5;
+  font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+  </style>
+</head>
+<body>
+
+<a href="#slide-content" class="skip-link">Skip to slide content</a>
+<div id="announcer" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<header role="banner">
+  <div class="bar">
+    <div class="kbd" id="kbdSwipe">Swipe</div>
+  </div>
+</header>
+
+<main id="slide-content" role="main" aria-label="Presentation slides">
+
+
+<!-- ==========================================
+     SLIDE 1 — TITLE
+     data-slide="title"
+     Use for: Opening slide. Left panel has
+     label / h1 / h2 / date / presenter credit.
+     Right stage: embed an iframe, canvas, or
+     leave the stage-fill empty.
+
+     To embed a live canvas/iframe:
+       <div class="stage-fill">
+         <iframe src="URL" title="..." tabindex="-1"></iframe>
+       </div>
+     To use a static image:
+       <img src="images/cover.png" alt="" style="width:100%;height:100%;object-fit:cover;">
+     To leave blank: remove contents of .stage.
+     ========================================== -->
+<section class="slide" data-slide="title" aria-label="Slide 1: [Workshop Title]" tabindex="-1">
+  <div class="content">
+    <div>
+      <div class="label">[Event or Series Label]</div>
+      <h1>[Workshop Title]</h1>
+      <h2>[Subtitle or tagline]</h2>
+      <p class="date">[Month Day, Year]</p>
+    </div>
+    <div class="title-credit">
+      <span class="credit-names">[Presenter Name] &middot; [Role or Affiliation]</span>
+    </div>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <!-- Replace with iframe, canvas, or image. Example:
+    <div class="stage-fill">
+      <iframe src="https://your-live-embed.example.com" title="[Description]" tabindex="-1"></iframe>
+    </div>
+    -->
+  </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 2 — CONTENT + STEP GRID
+     Use for: Concept introduction with
+     numbered fragment steps revealed one
+     at a time on Space/click/arrow-right.
+
+     Each .frag .step-row reveals in order.
+     Add as many .step-row.frag as needed.
+     ========================================== -->
+<section class="slide" data-slide="step-example" aria-label="Slide 2: [Slide Title]" tabindex="-1">
+  <div class="content">
+    <div class="label">[Section Label]</div>
+    <h1>[Slide Title]</h1>
+    <h2>[Supporting subtitle or framing question]</h2>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="step-grid">
+      <div class="step-row frag"><div class="step-num">1</div><div class="step-text">[First point — use <strong>bold</strong> for key terms]</div></div>
+      <div class="step-row frag"><div class="step-num">2</div><div class="step-text">[Second point]</div></div>
+      <div class="step-row frag"><div class="step-num">3</div><div class="step-text">[Third point]</div></div>
+      <div class="step-row frag"><div class="step-num">4</div><div class="step-text">[Fourth point]</div></div>
+      <div class="step-row frag"><div class="step-num">5</div><div class="step-text">[Fifth point — add or remove rows as needed]</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 3 — SIDE-BY-SIDE COMPARE
+     Use for: Contrasting two positions,
+     approaches, frameworks, or phases.
+     Each column has: col-tag / col-title / col-sub.
+     ========================================== -->
+<section class="slide" data-slide="compare-example" aria-label="Slide 3: [Comparison Title]" tabindex="-1">
+  <div class="content">
+    <div class="label">[Section Label]</div>
+    <h1>[Comparison Title]</h1>
+    <h2>[Framing sentence or question]</h2>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="stageCompare">
+      <div class="col">
+        <span class="col-tag">[Column A Label]</span>
+        <div class="col-title">[Column A Heading]</div>
+        <div class="col-sub">[Column A description — one or two sentences explaining this side of the comparison.]</div>
+      </div>
+      <div class="col">
+        <span class="col-tag">[Column B Label]</span>
+        <div class="col-title">[Column B Heading]</div>
+        <div class="col-sub">[Column B description — one or two sentences explaining this side of the comparison.]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 4 — SECTION BREAK
+     Use for: Major section transitions.
+     Full-bleed dark background, large heading,
+     accent bar across the top.
+     Add class="slide slide-break" — no .stage needed.
+     ========================================== -->
+<section class="slide slide-break" data-slide="break-example" aria-label="Slide 4: Part [N]" tabindex="-1">
+  <div class="content">
+    <div class="break-tag">Part [N]</div>
+    <h1>[Section Title]</h1>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 5 — RESOURCES / LINKS
+     Use for: Reference lists, further reading,
+     or any grouped link collection.
+     Groups: .res-group > .res-group-title + .res-list
+     Items:  .res-list li > a + .res-desc
+     ========================================== -->
+<section class="slide" data-slide="resources-example" aria-label="Slide 5: Resources" tabindex="-1">
+  <div class="content">
+    <div class="label">Resources</div>
+    <h1>[Resources Title]</h1>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="res-wrap">
+
+      <div class="res-group">
+        <div class="res-group-title">[Group 1 Label]</div>
+        <ul class="res-list">
+          <li>
+            <a href="[URL]" target="_blank" rel="noopener">[Link 1 Title]</a>
+            <div class="res-desc">[Brief description of this resource]</div>
+          </li>
+          <li>
+            <a href="[URL]" target="_blank" rel="noopener">[Link 2 Title]</a>
+            <div class="res-desc">[Brief description]</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="res-group">
+        <div class="res-group-title">[Group 2 Label]</div>
+        <ul class="res-list">
+          <li>
+            <a href="[URL]" target="_blank" rel="noopener">[Link 3 Title]</a>
+            <div class="res-desc">[Brief description]</div>
+          </li>
+          <li>
+            <a href="[URL]" target="_blank" rel="noopener">[Link 4 Title]</a>
+            <div class="res-desc">[Brief description]</div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 6 — CLOSING / DISCUSSION
+     Use for: Final slide with open questions
+     or next-steps prompt. Step grid works
+     here too — reveal discussion questions
+     one at a time.
+     ========================================== -->
+<section class="slide" data-slide="close" aria-label="Slide 6: [Closing Title]" tabindex="-1">
+  <div class="content">
+    <div class="label">[Closing Label]</div>
+    <h1>[Closing Title]</h1>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="step-grid">
+      <div class="step-row frag"><div class="step-num">1</div><div class="step-text">[Discussion question or next step 1]</div></div>
+      <div class="step-row frag"><div class="step-num">2</div><div class="step-text">[Discussion question or next step 2]</div></div>
+      <div class="step-row frag"><div class="step-num">3</div><div class="step-text">[Discussion question or next step 3]</div></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<!-- STICKY FOOTER SLIDER -->
+<div class="sticky-footer" role="navigation" aria-label="Slide navigation">
+  <div class="footer-slider">
+    <button class="footer-arrow" id="btn-prev" aria-label="Previous slide">&#8592;</button>
+    <div class="slider-track" role="presentation">
+      <input type="range" id="slide-scrubber" min="1" max="6" value="1" aria-label="Navigate to slide">
+      <div class="slider-progress"></div>
+      <div class="slider-thumb"></div>
+    </div>
+    <button class="footer-arrow" id="btn-next" aria-label="Next slide">&#8594;</button>
+    <div class="footer-meta">
+      <span id="slider-counter">1 / 6</span>
+      <span class="kbd">Space</span>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+let idx = 0;
+const slides = Array.from(document.querySelectorAll('section.slide'));
+const scrubber = document.getElementById('slide-scrubber');
+const sliderCounter = document.getElementById('slider-counter');
+const sliderProgress = document.querySelector('.slider-progress');
+const sliderThumb = document.querySelector('.slider-thumb');
+const announcer = document.getElementById('announcer');
+
+function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+function fragsOf(slide) { return Array.from(slide.querySelectorAll('.frag')); }
+
+function fitStepGrid(slide) {
+  const grid = slide.querySelector('.step-grid');
+  if (!grid) return;
+  const stage = grid.closest('.stage');
+  if (!stage) return;
+  grid.style.fontSize = '';
+  const available = stage.clientHeight;
+  if (available <= 0) return;
+  let size = 100;
+  while (grid.scrollHeight > available && size > 60) {
+    size -= 2;
+    grid.style.fontSize = size + '%';
+  }
+}
+
+function show(i, revealAll) {
+  const next = clamp(i, 0, slides.length - 1);
+  slides[idx].classList.remove('active');
+  idx = next;
+  const current = slides[idx];
+  current.classList.add('active');
+  fragsOf(current).forEach(f => f.classList.toggle('visible', !!revealAll));
+
+  if (sliderCounter) sliderCounter.textContent = `${idx + 1} / ${slides.length}`;
+  if (scrubber) scrubber.value = String(idx + 1);
+
+  const progress = ((idx + 1) / slides.length) * 100;
+  if (sliderProgress) sliderProgress.style.width = `${progress}%`;
+  if (sliderThumb) sliderThumb.style.left = `calc(${progress}% - 6px)`;
+
+  if (announcer) {
+    const label = current.getAttribute('aria-label') || `Slide ${idx + 1}`;
+    announcer.textContent = label;
+  }
+
+  history.replaceState(null, '', `#${idx + 1}`);
+  fitStepGrid(current);
+
+  const f = current.querySelector('.content');
+  if (f && document.activeElement !== scrubber) {
+    f.setAttribute('tabindex', '-1');
+    f.focus({ preventScroll: true });
+  }
+}
+
+function advance() {
+  const frags = fragsOf(slides[idx]);
+  const hidden = frags.filter(f => !f.classList.contains('visible'));
+  if (hidden.length) {
+    hidden[0].classList.add('visible');
+  } else if (idx < slides.length - 1) {
+    show(idx + 1);
+  }
+}
+
+function retreat() {
+  const frags = fragsOf(slides[idx]);
+  const shown = frags.filter(f => f.classList.contains('visible'));
+  if (shown.length) {
+    shown[shown.length - 1].classList.remove('visible');
+  } else if (idx > 0) {
+    show(idx - 1, true);
+  }
+}
+
+function toggleOverview() {
+  const on = document.body.classList.toggle('overview');
+  if (on) slides[idx].scrollIntoView({ block: 'center', behavior: 'instant' });
+}
+
+/* Assign data-slide-num for overview labels */
+slides.forEach((s, i) => {
+  s.setAttribute('data-slide-num', i + 1);
+  s.addEventListener('click', () => {
+    if (!document.body.classList.contains('overview')) return;
+    document.body.classList.remove('overview');
+    show(i, true);
+  });
+});
+
+/* Scrubber */
+if (scrubber) {
+  scrubber.min = 1;
+  scrubber.max = slides.length;
+  scrubber.addEventListener('input', e => show(parseInt(e.target.value) - 1, true));
+}
+
+/* Buttons */
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+if (btnPrev) btnPrev.addEventListener('click', retreat);
+if (btnNext) btnNext.addEventListener('click', advance);
+
+/* Keyboard */
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'Escape' || e.key === 'o' || e.key === 'O') {
+    e.preventDefault(); toggleOverview(); return;
+  }
+  if (document.body.classList.contains('overview')) return;
+  if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); advance(); }
+  if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); retreat(); }
+  if (e.key === 'Home') { e.preventDefault(); show(0); }
+  if (e.key === 'End') { e.preventDefault(); show(slides.length - 1, true); }
+});
+
+/* Touch swipe */
+let tx = 0, ty = 0, swipeOk = false;
+document.addEventListener('touchstart', e => {
+  if (e.touches.length !== 1) { swipeOk = false; return; }
+  if (e.target.closest('.stage') || e.target === scrubber || e.target.closest('.sticky-footer')) { swipeOk = false; return; }
+  tx = e.touches[0].clientX; ty = e.touches[0].clientY; swipeOk = true;
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (!swipeOk || e.touches.length !== 1) return;
+  if (Math.abs(e.touches[0].clientY - ty) > Math.abs(e.touches[0].clientX - tx) * 1.5) swipeOk = false;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  if (!swipeOk) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  const dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) >= 48 && Math.abs(dx) >= Math.abs(dy) * 1.2) { dx < 0 ? advance() : retreat(); }
+  else if (Math.abs(dx) < 16 && Math.abs(dy) < 16) { advance(); }
+  swipeOk = false;
+}, { passive: true });
+
+/* Trackpad horizontal scroll */
+let wheelLock = false;
+document.addEventListener('wheel', e => {
+  if (document.body.classList.contains('overview')) return;
+  if (e.target === scrubber || e.target.closest('.sticky-footer')) return;
+  if (wheelLock) return;
+  const absX = Math.abs(e.deltaX), absY = Math.abs(e.deltaY);
+  if (absX < 30 || absX < absY) return;
+  wheelLock = true;
+  e.deltaX > 0 ? advance() : retreat();
+  setTimeout(() => { wheelLock = false; }, 400);
+}, { passive: true });
+
+/* Resize: re-fit step grids */
+window.addEventListener('resize', () => fitStepGrid(slides[idx]));
+
+/* Hash navigation */
+window.addEventListener('hashchange', () => {
+  const m = location.hash.match(/^#(\d+)$/);
+  if (m) show(clamp(parseInt(m[1], 10) - 1, 0, slides.length - 1), true);
+});
+
+/* Init */
+const m = location.hash.match(/^#(\d+)$/);
+show(m ? clamp(parseInt(m[1], 10) - 1, 0, slides.length - 1) : 0, true);
+</script>
+
+</body>
+</html>

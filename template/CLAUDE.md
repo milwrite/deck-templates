@@ -10,9 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Workshop [N] of a 3-part CUNY AI Lab faculty series (system prompts → knowledge collections → agentic tools). Single-page HTML slide deck, no build system, no npm dependencies. Open `index.html` directly in a browser or visit `https://cuny-ai-lab.github.io/[REPO-NAME]/`
-
-- **Sibling repos:** https://github.com/cuny-ai-lab/system-prompting and https://github.com/cuny-ai-lab/knowledge-collections — share the same deck engine, CSS, and JS; content conventions should stay consistent across all
+A template for a workshop or presentation series. Single-page HTML slide deck, no build system, no npm dependencies. Open `index.html` directly in a browser or serve from any static host.
 
 ## Architecture
 
