@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[WORKSHOP TITLE] — CUNY AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,800;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<a href="#deck" class="skip-link">Skip to slides</a>
+
+<!-- Announcer for screen readers -->
+<div id="slide-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<!-- Logo Watermark -->
+<img src="images/logo-horizontal.png" alt="" class="logo-watermark" id="logoWatermark" aria-hidden="true">
+
+<div id="deck" role="region" aria-roledescription="slide deck" aria-label="[WORKSHOP TITLE] presentation">
+
+
+<!-- ==========================================
+     SLIDE 1 — TITLE (layout: title-slide)
+     Use for: Opening slide with workshop name,
+     subtitle, date, and author attribution.
+     ========================================== -->
+<div class="slide title-slide" role="group" aria-roledescription="slide" aria-label="Slide 1: Title">
+  <div class="title-slide-content">
+    <img src="images/logo-horizontal.png" alt="CUNY AI Lab" class="title-logo">
+    <h1>[Workshop Title]</h1>
+    <p class="subtitle">[A Workshop for the CUNY AI Lab Sandbox]</p>
+    <p class="meta">[Date]</p>
+    <p class="meta" style="margin-top: 0.5em; font-size: 0.85em; color: #8a9bb0;">Developed by [Author Names]</p>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 2 — ROADMAP (layout: layout-full-dark)
+     Use for: Overview of session sequence,
+     workshop series, or agenda. Dark background,
+     centered content.
+     ========================================== -->
+<div class="slide layout-full-dark" role="group" aria-roledescription="slide" aria-label="Slide 2: Workshop Roadmap">
+  <span class="label label-cyan">Workshop Series</span>
+  <h2>[Series Title]</h2>
+  <div class="roadmap">
+    <div class="roadmap-item active">
+      <div class="week-label">[Date] — This Week</div>
+      <h4>[Session 1 Title]</h4>
+      <p>[Brief description of what participants will learn or do]</p>
+    </div>
+    <div class="roadmap-item">
+      <div class="week-label">[Date]</div>
+      <h4>[Session 2 Title]</h4>
+      <p>[Brief description]</p>
+    </div>
+    <div class="roadmap-item">
+      <div class="week-label">[Date]</div>
+      <h4>[Session 3 Title]</h4>
+      <p>[Brief description]</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 3 — TWO-COLUMN SPLIT (layout: layout-split)
+     Use for: Concept explanation with visual
+     or diagram on the right. Left = text content,
+     Right = stage panel (images, diagrams, carousels).
+     ========================================== -->
+<div class="slide layout-split" role="group" aria-roledescription="slide" aria-label="Slide 3: [Topic Title]">
+  <div class="content">
+    <span class="label label-cyan">The Basics</span>
+    <h2>[Topic Title]</h2>
+    <p>[Introductory paragraph explaining the concept. Use <strong>bold</strong> for key terms and <em>italics</em> for emphasis.]</p>
+    <blockquote>[A memorable analogy or framing quote that helps participants understand the concept.]</blockquote>
+    <div class="tip-box" style="margin-top: 1em;">
+      <p><strong>Key distinction:</strong> [Clarifying note that draws a boundary or highlights a common misconception.]</p>
+    </div>
+  </div>
+  <div class="stage">
+    <p style="color: var(--light-text); text-align: center; padding: 2em;">[Place a diagram, screenshot, or visual element here. The stage panel uses a dark/accent background by default.]</p>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 4 — SPLIT WITH CAROUSEL (layout: layout-split)
+     Use for: Step-by-step walkthrough with
+     screenshots auto-advancing on the right.
+     ========================================== -->
+<div class="slide layout-split" role="group" aria-roledescription="slide" aria-label="Slide 4: [Step-by-Step Title]">
+  <div class="content">
+    <span class="label label-cyan">[Section Label]</span>
+    <h2>[Step-by-Step Title]</h2>
+    <ul class="stream-list">
+      <li><strong>[Step 1]:</strong> [Description of what the user does]</li>
+      <li><strong>[Step 2]:</strong> [Description of the next action]</li>
+      <li><strong>[Step 3]:</strong> [Description of the final action]</li>
+    </ul>
+    <div class="tip-box" style="margin-top: 1em;">
+      <p><strong>Note:</strong> [Any additional context or caveat about this process.]</p>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="carousel" data-interval="8000">
+      <div class="carousel-item active">
+        <img src="images/placeholder-a.png" alt="[Descriptive alt text for screenshot 1]">
+        <div class="carousel-caption"><strong>[Step 1 Title]</strong><br>[Description of what the screenshot shows, referencing UI elements in <strong>bold</strong>.]</div>
+      </div>
+      <div class="carousel-item">
+        <img src="images/placeholder-b.png" alt="[Descriptive alt text for screenshot 2]">
+        <div class="carousel-caption"><strong>[Step 2 Title]</strong><br>[Description of the second screenshot.]</div>
+      </div>
+      <div class="carousel-item">
+        <img src="images/placeholder-c.png" alt="[Descriptive alt text for screenshot 3]">
+        <div class="carousel-caption"><strong>[Step 3 Title]</strong><br>[Description of the third screenshot.]</div>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 5 — SPLIT WITH STEP REVEAL (layout: layout-split)
+     Use for: Before/after comparison, or content
+     that builds on click. Hidden content appears
+     one step at a time.
+     ========================================== -->
+<div class="slide layout-split" role="group" aria-roledescription="slide" aria-label="Slide 5: [Comparison Title]">
+  <div class="content">
+    <span class="label label-cyan">[Section Label]</span>
+    <h2>[Comparison Title]</h2>
+    <p>[Setup paragraph framing the scenario. What is the participant trying to do?]</p>
+
+    <h3>[Without Feature/Approach]</h3>
+    <div class="prompt-block prompt-bad">
+      <span class="prompt-label">Without</span>
+      <p>"[Example of a poor or naive approach. Show what happens when the feature is absent.]"</p>
+    </div>
+    <p class="prompt-note" aria-hidden="true">[Brief critique of why this fails.]</p>
+
+    <h3 class="step-hidden" data-step>[With Feature/Approach]</h3>
+    <div class="prompt-block prompt-good step-hidden" data-step>
+      <span class="prompt-label">With</span>
+      <p>"[Example of the improved approach. Show what happens when the feature is present.]"</p>
+    </div>
+  </div>
+  <div class="stage">
+    <p style="color: var(--light-text); text-align: center; padding: 2em;">[Optional visual for the right panel]</p>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 6 — SECTION DIVIDER (layout: layout-divider)
+     Use for: Breaking the deck into major parts.
+     Dark background, large centered heading.
+     ========================================== -->
+<div class="slide layout-divider" role="group" aria-roledescription="slide" aria-label="Slide 6: Part I">
+  <span class="label label-cyan">Part I</span>
+  <h2>[Section Title]</h2>
+  <p class="divider-subtitle">[One-line description of what this section covers]</p>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 7 — SINGLE COLUMN CONTENT (layout: layout-content)
+     Use for: Text-heavy explanation slides,
+     definitions, or discussion prompts.
+     Light background, full-width content.
+     ========================================== -->
+<div class="slide layout-content" role="group" aria-roledescription="slide" aria-label="Slide 7: [Content Title]">
+  <span class="label label-cyan">[Section Label]</span>
+  <h2>[Content Title]</h2>
+  <p>[Main explanatory text. This layout works well for longer prose, definitions, or discussion setup.]</p>
+  <ul class="stream-list">
+    <li><strong>[Point 1]:</strong> [Explanation]</li>
+    <li><strong>[Point 2]:</strong> [Explanation]</li>
+    <li><strong>[Point 3]:</strong> [Explanation]</li>
+  </ul>
+  <div class="tip-box">
+    <p><strong>Discussion prompt:</strong> [A question for participants to consider or discuss with a neighbor.]</p>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 8 — GRID CARDS (layout: layout-grid)
+     Use for: Side-by-side comparison cards,
+     feature lists, or categorized content.
+     ========================================== -->
+<div class="slide layout-content" role="group" aria-roledescription="slide" aria-label="Slide 8: [Grid Title]">
+  <span class="label label-cyan">[Section Label]</span>
+  <h2>[Grid Title]</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>[Card 1 Title]</h3>
+      <p>[Card 1 description. Keep cards roughly equal in length for visual balance.]</p>
+    </div>
+    <div class="card">
+      <h3>[Card 2 Title]</h3>
+      <p>[Card 2 description.]</p>
+    </div>
+    <div class="card">
+      <h3>[Card 3 Title]</h3>
+      <p>[Card 3 description.]</p>
+    </div>
+    <div class="card">
+      <h3>[Card 4 Title]</h3>
+      <p>[Card 4 description.]</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 9 — PROMPT QUALITY PROGRESSION (layout: layout-split)
+     Use for: Weak → Getting Warmer → Strong
+     example sequence. Shows quality progression
+     with color-coded prompt blocks.
+     ========================================== -->
+<div class="slide layout-split" role="group" aria-roledescription="slide" aria-label="Slide 9: [Discipline] Example">
+  <div class="content">
+    <span class="label label-cyan">[Discipline Name]</span>
+    <h2>[Example Title]</h2>
+
+    <div class="prompt-block prompt-bad">
+      <span class="prompt-label">Weak</span>
+      <p>"[A weak example. Vague, generic, or counterproductive.]"</p>
+    </div>
+
+    <div class="prompt-block prompt-mid step-hidden" data-step>
+      <span class="prompt-label">Getting Warmer</span>
+      <p>"[A better example. Has some good elements but misses key aspects.]"</p>
+    </div>
+
+    <div class="prompt-block prompt-good step-hidden" data-step>
+      <span class="prompt-label">Strong</span>
+      <p>"[A strong example. Clear role, audience, procedure, framework, and constraints.]"</p>
+    </div>
+  </div>
+  <div class="stage">
+    <h3 style="color: var(--light-text);">[Analysis Title]</h3>
+    <ul style="color: var(--light-text); line-height: 1.8;">
+      <li>[What makes the strong example work]</li>
+      <li>[Key element that improved across versions]</li>
+      <li>[Pedagogical principle at play]</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 10 — SECTION DIVIDER (layout: layout-divider)
+     Use for: Second section break.
+     ========================================== -->
+<div class="slide layout-divider" role="group" aria-roledescription="slide" aria-label="Slide 10: Part II">
+  <span class="label label-cyan">Part II</span>
+  <h2>[Section Title]</h2>
+  <p class="divider-subtitle">[One-line description of what this section covers]</p>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 11 — BEST PRACTICES GRID (layout: layout-content)
+     Use for: Do/Don't lists, best practices,
+     or pitfalls. Card format with icons.
+     ========================================== -->
+<div class="slide layout-content" role="group" aria-roledescription="slide" aria-label="Slide 11: Best Practices">
+  <span class="label label-cyan">Guidelines</span>
+  <h2>Best Practices</h2>
+  <div class="grid-2">
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3><span aria-hidden="true">&#x2705;</span> [Do This]</h3>
+      <p>[Explanation of why this practice works well.]</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3><span aria-hidden="true">&#x2705;</span> [Do This Too]</h3>
+      <p>[Explanation.]</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-red);">
+      <h3><span aria-hidden="true">&#x274C;</span> [Avoid This]</h3>
+      <p>[Explanation of why this is a common mistake.]</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-red);">
+      <h3><span aria-hidden="true">&#x274C;</span> [Avoid This Too]</h3>
+      <p>[Explanation.]</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 12 — SECTION DIVIDER (layout: layout-divider)
+     Use for: Hands-on section break.
+     ========================================== -->
+<div class="slide layout-divider" role="group" aria-roledescription="slide" aria-label="Slide 12: Hands-On">
+  <span class="label label-cyan">Part III</span>
+  <h2>Hands-On Exercise</h2>
+  <p class="divider-subtitle">[Brief description of the exercise participants will complete]</p>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 13 — EXERCISE WITH COPYABLE TEMPLATE (layout: layout-split)
+     Use for: Guided exercises where participants
+     fill in a template. Left = instructions,
+     Right = copyable template block.
+     ========================================== -->
+<div class="slide layout-split" role="group" aria-roledescription="slide" aria-label="Slide 13: Exercise Step 1">
+  <div class="content">
+    <span class="label label-cyan">Step 1 of 3</span>
+    <h2>[Exercise Step Title]</h2>
+    <p>[Instructions for what participants should do in this step.]</p>
+    <ul class="stream-list">
+      <li>[Specific action or consideration 1]</li>
+      <li>[Specific action or consideration 2]</li>
+      <li>[Specific action or consideration 3]</li>
+    </ul>
+    <div class="tip-box" style="margin-top: 1em;">
+      <p><strong>Your turn:</strong> [Prompt participants to open the tool and try it now.]</p>
+    </div>
+  </div>
+  <div class="stage">
+    <h3 style="color: var(--light-text); margin-bottom: 0.5em;">[Template Title]</h3>
+    <div class="template-box">
+      <pre id="template-1"><code>[PLACEHOLDER FIELD 1]: _______________
+
+[PLACEHOLDER FIELD 2]: _______________
+
+[PLACEHOLDER FIELD 3]:
+- [Item a]
+- [Item b]
+- [Item c]
+
+[PLACEHOLDER FIELD 4]: _______________</code></pre>
+      <button onclick="copyTemplate('template-1')" class="copy-btn">Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 14 — EXERCISE STEP 2 (layout: layout-split)
+     Use for: Second step of a multi-step exercise.
+     ========================================== -->
+<div class="slide layout-split" role="group" aria-roledescription="slide" aria-label="Slide 14: Exercise Step 2">
+  <div class="content">
+    <span class="label label-cyan">Step 2 of 3</span>
+    <h2>[Second Exercise Step]</h2>
+    <p>[Instructions for the second step.]</p>
+    <ul class="stream-list">
+      <li>[Action 1]</li>
+      <li>[Action 2]</li>
+    </ul>
+  </div>
+  <div class="stage">
+    <h3 style="color: var(--light-text); margin-bottom: 0.5em;">[Template Title]</h3>
+    <div class="template-box">
+      <pre id="template-2"><code>[FIELD 1]: _______________
+
+[FIELD 2]: _______________
+
+[FIELD 3]: _______________</code></pre>
+      <button onclick="copyTemplate('template-2')" class="copy-btn">Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 15 — FULL-DARK SUMMARY (layout: layout-full-dark)
+     Use for: Key takeaways, summary of main
+     points, or "what we learned" wrap-up.
+     ========================================== -->
+<div class="slide layout-full-dark" role="group" aria-roledescription="slide" aria-label="Slide 15: Key Takeaways">
+  <span class="label label-cyan">Summary</span>
+  <h2>Key Takeaways</h2>
+  <div class="grid-2" style="max-width: 900px; margin: 1.5em auto 0;">
+    <div class="card" style="background: var(--dark-bg-lighter); color: var(--light-text);">
+      <h3>[Takeaway 1]</h3>
+      <p>[One-sentence summary of the first key lesson.]</p>
+    </div>
+    <div class="card" style="background: var(--dark-bg-lighter); color: var(--light-text);">
+      <h3>[Takeaway 2]</h3>
+      <p>[One-sentence summary of the second key lesson.]</p>
+    </div>
+    <div class="card" style="background: var(--dark-bg-lighter); color: var(--light-text);">
+      <h3>[Takeaway 3]</h3>
+      <p>[One-sentence summary of the third key lesson.]</p>
+    </div>
+    <div class="card" style="background: var(--dark-bg-lighter); color: var(--light-text);">
+      <h3>[Takeaway 4]</h3>
+      <p>[One-sentence summary of the fourth key lesson.]</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SLIDE 16 — CLOSING (layout: title-slide)
+     Use for: Final slide with next steps,
+     contact info, or resources.
+     ========================================== -->
+<div class="slide title-slide" role="group" aria-roledescription="slide" aria-label="Slide 16: Closing">
+  <div class="title-slide-content">
+    <img src="images/logo-horizontal.png" alt="CUNY AI Lab" class="title-logo">
+    <h1>Thank You</h1>
+    <p class="subtitle">[Closing message or next steps]</p>
+    <p class="meta" style="margin-top: 1em;">Next session: [Date] — [Next Workshop Title]</p>
+    <p class="meta" style="margin-top: 0.5em; font-size: 0.85em; color: #8a9bb0;">[Contact info or resource links]</p>
+  </div>
+</div>
+
+
+</div><!-- end #deck -->
+
+
+<!-- Navigation Bar -->
+<nav class="nav-bar" aria-label="Slide navigation">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&larr;</button>
+  <div id="scrubber-container" role="slider" aria-label="Slide position" aria-valuenow="1" aria-valuemin="1" aria-valuemax="16" aria-valuetext="Slide 1 of 16" tabindex="0">
+    <div id="scrubber-track">
+      <div id="scrubber-fill"></div>
+    </div>
+  </div>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&rarr;</button>
+  <span class="slide-counter" id="slideCounter" aria-hidden="true">1 / 16</span>
+</nav>
+
+
+<!-- Clipboard copy utility -->
+<script>
+function copyTemplate(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = el.parentElement.querySelector('.copy-btn');
+    if (btn) {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 2000);
+    }
+  });
+}
+</script>
+
+<!-- JS Modules (load order matters) -->
+<script src="js/tabs.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/scrubber.js"></script>
+<script src="js/deck-engine.js"></script>
+
+</body>
+</html>

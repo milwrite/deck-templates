@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[WORKSHOP TITLE] — CUNY AI Lab</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
+<style>
+    /* =============================================
+       DESIGN TOKENS & BASE STYLES
+       Customize these to match your workshop theme
+       ============================================= */
+    :root {
+        --accent-color: #42affa;
+        --accent-hover: #6fc3ff;
+        --accent-dim: rgba(66, 175, 250, 0.2);
+        --accent-border: rgba(66, 175, 250, 0.3);
+        --text-primary: #ffffff;
+        --text-body: #d0d0d0;
+        --text-muted: #888;
+        --bg-dark: rgba(0, 0, 0, 1);
+        --bg-alt: rgba(5, 5, 5, 1);
+        --timing-bg: rgba(0, 0, 0, 0.6);
+    }
+
+    /* =============================================
+       TIMING BADGES
+       Shows facilitator timing on each slide.
+       Hidden on section-intro and section-break slides.
+       ============================================= */
+    .reveal .timing {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 0.45em;
+        color: #666;
+        background: var(--timing-bg);
+        padding: 3px 8px;
+        border-radius: 3px;
+        z-index: 100;
+        font-weight: normal;
+    }
+    .section-intro .timing,
+    .section-break .timing {
+        display: none;
+    }
+
+    /* =============================================
+       TYPOGRAPHY
+       ============================================= */
+    .reveal h1 {
+        font-size: 1.6em;
+        margin-bottom: 0.4em;
+        text-transform: none;
+        text-align: left;
+        color: var(--text-primary);
+    }
+    .reveal h2 {
+        font-size: 1.6em;
+        margin-bottom: 1em;
+        margin-top: 0.2em;
+        text-transform: none;
+        text-align: left;
+        color: var(--text-primary);
+    }
+    .reveal h3 {
+        font-size: 1.1em;
+        margin-bottom: 0.8em;
+        margin-top: 0.2em;
+        text-transform: none;
+        text-align: left;
+        color: var(--text-primary);
+    }
+    .reveal p {
+        margin: 0.4em 0 1em;
+        font-size: 0.85em;
+        text-align: left;
+        color: var(--text-body);
+    }
+    .reveal ul {
+        font-size: 0.75em;
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+        text-align: left;
+        color: var(--text-body);
+    }
+    .reveal li {
+        text-align: left;
+        color: var(--text-body);
+    }
+    .reveal .small {
+        font-size: 0.7em;
+    }
+
+    /* =============================================
+       SLIDE LAYOUT
+       ============================================= */
+    .reveal section {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 60px 80px !important;
+        text-align: left !important;
+        box-sizing: border-box;
+    }
+    .reveal .slides > section > section {
+        padding: 60px 80px !important;
+    }
+
+    /* =============================================
+       SECTION BACKGROUNDS
+       Alternate between --bg-dark and --bg-alt
+       to create subtle visual grouping.
+       ============================================= */
+    .section-intro { background-color: var(--bg-dark) !important; }
+    .section-content { background-color: var(--bg-alt) !important; }
+    .section-activity { background-color: var(--bg-dark) !important; }
+    .section-break { background-color: var(--bg-alt) !important; }
+    .section-demo { background-color: var(--bg-dark) !important; }
+    .section-closing { background-color: var(--bg-alt) !important; }
+
+    /* =============================================
+       TWO-COLUMN GRID
+       ============================================= */
+    .reveal .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        font-size: 0.75em;
+        margin-top: 0.5em;
+    }
+
+    /* =============================================
+       TABLES
+       ============================================= */
+    .reveal table {
+        font-size: 0.5em;
+        margin: 10px auto;
+        width: 90%;
+        text-align: left;
+    }
+    .reveal th {
+        background-color: var(--accent-dim);
+        font-weight: bold;
+        color: var(--accent-color);
+    }
+    .reveal td, .reveal th {
+        padding: 6px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: left;
+    }
+
+    /* =============================================
+       WORKSHEET / HIGHLIGHT BOXES
+       ============================================= */
+    .reveal .worksheet-section {
+        background: var(--accent-dim);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px auto;
+        font-size: 0.75em;
+        border: 1px solid var(--accent-border);
+        max-width: 80%;
+    }
+
+    /* =============================================
+       CHECKBOX LIST (for activities)
+       ============================================= */
+    .reveal .checkbox-list {
+        list-style: none;
+        text-align: left;
+        font-size: 0.9em;
+        padding-left: 0;
+    }
+    .reveal .checkbox-list li {
+        margin: 0.3em 0;
+    }
+    .reveal .checkbox-list li:before {
+        content: "\2610 ";
+        margin-right: 8px;
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+
+    /* =============================================
+       LINKS & CONTROLS
+       ============================================= */
+    .reveal a {
+        color: var(--accent-color);
+        text-decoration: none;
+    }
+    .reveal a:hover {
+        color: var(--accent-hover);
+        text-decoration: underline;
+    }
+    .reveal .controls { color: var(--accent-color); }
+    .reveal .progress { display: none; }
+    .reveal .slide-number {
+        left: 20px;
+        right: auto;
+        font-size: 1.2em;
+        color: var(--text-muted);
+    }
+
+    /* =============================================
+       CITATIONS
+       ============================================= */
+    .reveal .citations {
+        font-size: 0.55em;
+    }
+
+    /* =============================================
+       IMAGES
+       ============================================= */
+    .reveal img {
+        max-height: 400px;
+    }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+
+<!-- ==========================================
+     SLIDE 1 — TITLE
+     Section class: section-intro
+     Use for: Opening slide with workshop name,
+     date, facilitator, and host organization.
+     ========================================== -->
+<section data-timing="60" class="section-intro">
+    <h1>[Workshop Title]</h1>
+    <p>[Day, Date]</p>
+    <p class="small">Facilitated by [Name(s)]</p>
+    <p class="small">[Host Organization] | [Program/Lab Name]</p>
+    <div class="timing">1 min</div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 2 — ICEBREAKER / INTRODUCTIONS
+     Section class: section-intro
+     Use for: Opening participatory activity.
+     Prompt + discussion pairs/groups.
+     ========================================== -->
+<section data-timing="600" class="section-intro">
+    <h2>Welcome and introductions</h2>
+    <div class="timing">10 min</div>
+    <p class="small">Please share with the group:</p>
+    <ul>
+        <li>[Introduction prompt 1: Name and pronouns]</li>
+        <li>[Introduction prompt 2: Field of study or work]</li>
+        <li>[Introduction prompt 3: Fun/relevant question]</li>
+    </ul>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 3 — CONCEPT / DEFINITION
+     Section class: section-content
+     Use for: Key concept explanation with
+     definition + pipeline/process breakdown.
+     ========================================== -->
+<section class="section-content">
+    <h2>[Concept Title]</h2>
+    <div class="timing">10 min</div>
+    <p class="small"><strong>Definition:</strong> [One-sentence definition of the concept.]</p>
+    <ul>
+        <li>[Key point 1 about the concept]</li>
+        <li>[Key point 2 about the concept]</li>
+        <li>[Key point 3 about the concept]</li>
+    </ul>
+    <p class="small"><strong>Pipeline:</strong> [Step 1] → [Step 2] → [Step 3] → [Step 4] → [Output]</p>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 4 — TWO-COLUMN COMPARISON
+     Section class: section-content
+     Use for: Side-by-side comparison of two
+     approaches, frameworks, or categories.
+     ========================================== -->
+<section class="section-content">
+    <h2>[Comparison Title]</h2>
+    <div class="timing">5 min</div>
+    <div class="two-column">
+        <div>
+            <h3>[Column A Title]</h3>
+            <ul>
+                <li>[Point 1]</li>
+                <li>[Point 2]</li>
+                <li>[Point 3]</li>
+            </ul>
+        </div>
+        <div>
+            <h3>[Column B Title]</h3>
+            <ul>
+                <li>[Point 1]</li>
+                <li>[Point 2]</li>
+                <li>[Point 3]</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 5 — TABLE / DATA DISPLAY
+     Section class: section-content
+     Use for: Structured data, feature matrices,
+     comparison tables, or schedules.
+     ========================================== -->
+<section class="section-content">
+    <h2>[Table Title]</h2>
+    <div class="timing">5 min</div>
+    <table>
+        <thead>
+            <tr>
+                <th>[Column 1]</th>
+                <th>[Column 2]</th>
+                <th>[Column 3]</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>[Data 1a]</td>
+                <td>[Data 1b]</td>
+                <td>[Data 1c]</td>
+            </tr>
+            <tr>
+                <td>[Data 2a]</td>
+                <td>[Data 2b]</td>
+                <td>[Data 2c]</td>
+            </tr>
+            <tr>
+                <td>[Data 3a]</td>
+                <td>[Data 3b]</td>
+                <td>[Data 3c]</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 6 — SECTION BREAK
+     Section class: section-break
+     Use for: Transitioning between major parts
+     of the workshop. Visual pause.
+     ========================================== -->
+<section class="section-break">
+    <h2>Part [N]: [Section Title]</h2>
+    <p class="small">[One-line description of what this section covers]</p>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 7 — DEMO INTRODUCTION
+     Section class: section-demo
+     Use for: Setting up a live demo. Explain
+     what participants will see and why.
+     ========================================== -->
+<section class="section-demo">
+    <h2>[Demo Title]</h2>
+    <div class="timing">10 min</div>
+    <p class="small">[Brief description of what the demo shows and what to watch for.]</p>
+    <p class="small">[Context for why this demo matters pedagogically.]</p>
+    <ul>
+        <li>[What participants should observe 1]</li>
+        <li>[What participants should observe 2]</li>
+        <li>[What participants should observe 3]</li>
+    </ul>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 8 — DEMO WITH EXTERNAL LINK
+     Section class: section-demo
+     Use for: Demo that links to an external tool,
+     app, or interactive resource.
+     ========================================== -->
+<section class="section-demo">
+    <h2>[Interactive Tool Name]</h2>
+    <div class="timing">10 min</div>
+    <a href="[URL]" target="_blank">Open [Tool Name] →</a>
+    <p class="small">[Description of what participants will do with the tool.]</p>
+    <ul>
+        <li>[Task 1: what to try first]</li>
+        <li>[Task 2: what to try second]</li>
+        <li>[Task 3: what to observe/discuss]</li>
+    </ul>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 9 — VERTICAL SLIDE GROUP
+     Use for: Deep-dive content that branches
+     from a parent topic. Navigate down with
+     arrow keys. Each sub-slide is a <section>
+     nested inside the parent <section>.
+     ========================================== -->
+<section>
+    <!-- Parent slide (horizontal) -->
+    <section class="section-content">
+        <h2>[Topic Overview]</h2>
+        <div class="timing">15 min</div>
+        <p class="small">[Introduction to the topic. Press ↓ for details.]</p>
+        <ul>
+            <li>[Subtopic 1]</li>
+            <li>[Subtopic 2]</li>
+            <li>[Subtopic 3]</li>
+        </ul>
+    </section>
+
+    <!-- Child slide 1 (vertical) -->
+    <section class="section-content">
+        <h2>[Subtopic 1 Detail]</h2>
+        <p class="small">[Detailed explanation of subtopic 1.]</p>
+        <ul>
+            <li>[Detail point 1]</li>
+            <li>[Detail point 2]</li>
+        </ul>
+    </section>
+
+    <!-- Child slide 2 (vertical) -->
+    <section class="section-content">
+        <h2>[Subtopic 2 Detail]</h2>
+        <p class="small">[Detailed explanation of subtopic 2.]</p>
+    </section>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 10 — ACTIVITY WITH CHECKBOX LIST
+     Section class: section-activity
+     Use for: Hands-on exercises with checkable
+     task lists. Participants work through steps.
+     ========================================== -->
+<section class="section-activity">
+    <h2>[Activity Title]</h2>
+    <div class="timing">15 min</div>
+    <p class="small">[Setup instructions for the activity.]</p>
+    <ul class="checkbox-list">
+        <li>[Step 1: specific action to complete]</li>
+        <li>[Step 2: specific action to complete]</li>
+        <li>[Step 3: specific action to complete]</li>
+        <li>[Step 4: specific action to complete]</li>
+    </ul>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 11 — WORKSHEET / TEMPLATE
+     Section class: section-activity
+     Use for: Fill-in-the-blank templates or
+     guided worksheets participants complete.
+     ========================================== -->
+<section class="section-activity">
+    <h2>[Worksheet Title]</h2>
+    <div class="timing">10 min</div>
+    <div class="worksheet-section">
+        <p><strong>[Prompt/Question 1]:</strong></p>
+        <p>[Space for participant response / template field]</p>
+        <p><strong>[Prompt/Question 2]:</strong></p>
+        <p>[Space for participant response / template field]</p>
+        <p><strong>[Prompt/Question 3]:</strong></p>
+        <p>[Space for participant response / template field]</p>
+    </div>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 12 — DISCUSSION / REFLECTION
+     Section class: section-activity
+     Use for: Group discussion prompts or
+     individual reflection moments.
+     ========================================== -->
+<section class="section-activity">
+    <h2>[Discussion Title]</h2>
+    <div class="timing">10 min</div>
+    <p class="small">Turn to your neighbor and discuss:</p>
+    <ul>
+        <li>A. "[Discussion prompt A]"</li>
+        <li>B. "[Discussion prompt B]"</li>
+    </ul>
+    <p class="small">[Follow-up instruction: share with the group, write down, etc.]</p>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 13 — KEY TAKEAWAYS / SUMMARY
+     Section class: section-closing
+     Use for: End-of-workshop summary.
+     ========================================== -->
+<section class="section-closing">
+    <h2>Key Takeaways</h2>
+    <ul>
+        <li><strong>[Takeaway 1]:</strong> [One-sentence summary]</li>
+        <li><strong>[Takeaway 2]:</strong> [One-sentence summary]</li>
+        <li><strong>[Takeaway 3]:</strong> [One-sentence summary]</li>
+    </ul>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 14 — RESOURCES / NEXT STEPS
+     Section class: section-closing
+     Use for: Links, further reading, contact
+     info, and next session details.
+     ========================================== -->
+<section class="section-closing">
+    <h2>Resources &amp; Next Steps</h2>
+    <ul>
+        <li><a href="[URL]">[Resource 1 Name]</a></li>
+        <li><a href="[URL]">[Resource 2 Name]</a></li>
+        <li><a href="[URL]">[Resource 3 Name]</a></li>
+    </ul>
+    <p class="small" style="margin-top: 1.5em;">Next session: [Date] — <a href="[URL]">[Next Workshop Title]</a></p>
+    <p class="small">Questions? [Contact info]</p>
+</section>
+
+
+<!-- ==========================================
+     SLIDE 15 — CLOSING / THANK YOU
+     Section class: section-closing
+     Use for: Final slide.
+     ========================================== -->
+<section class="section-closing">
+    <h1>Thank You</h1>
+    <p>[Closing message]</p>
+    <p class="small">[Organization name] | [Date]</p>
+</section>
+
+
+</div><!-- end .slides -->
+</div><!-- end .reveal -->
+
+
+<!-- ==========================================
+     REVEAL.JS INITIALIZATION
+     Loaded from CDN. No local install needed.
+     ========================================== -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+    hash: true,               // Enable hash-based routing (#/3)
+    slideNumber: true,         // Show slide numbers
+    showNotes: false,          // Speaker notes off by default
+    transition: 'slide',       // Slide transition (none/fade/slide/convex/concave/zoom)
+    transitionSpeed: 'default', // Transition speed (default/fast/slow)
+    center: false,             // Left-align content (matches our CSS)
+    width: 1280,               // Presentation width
+    height: 720,               // Presentation height
+    margin: 0.04,              // Margin around slides
+    minScale: 0.2,             // Minimum scale
+    maxScale: 2.0,             // Maximum scale
+
+    // Keyboard shortcuts
+    keyboard: {
+        // Add custom shortcuts here if needed
+        // 84: toggleTimer  // Example: 'T' to toggle timer
+    }
+});
+</script>
+
+</body>
+</html>
