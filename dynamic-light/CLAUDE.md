@@ -4,6 +4,15 @@ This file is the primary reference for any agent working in this directory. Read
 
 ---
 
+## Skills
+
+This template ships with two skills agents should use for slide work:
+
+- **`skills/deck-editor/SKILL.md`** (in repo root) — the canonical protocol for editing slides: how to do line edits, replace slides, add/remove slides, fix aria attributes, and keep `SLIDES.md` in sync. Read this before making any edits to `index.html`.
+- **Frontend design** — when making visual/styling changes to CSS (colors, layout, typography), apply design-system discipline: use existing design tokens from `css/styles.css` `:root`, do not introduce new color values without a token, maintain contrast ratios, and verify `prefers-reduced-motion` is respected in `css/animations.css`.
+
+---
+
 ## Quick Start: Agent Checklist
 
 You are filling in a slide deck template. Work through these steps in order:

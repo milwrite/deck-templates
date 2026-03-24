@@ -4,6 +4,15 @@ This file tells Claude Code, Codex, and other CLI agents how to work with this r
 
 ---
 
+## Skills
+
+Two skills live in `skills/` at the repo root. Read them before working on slides.
+
+- **`skills/deck-editor/SKILL.md`** — edit protocol for `index.html`: line edits, slide add/remove with renumbering, scrubber total, SLIDES.md sync, validation checklist. This is the canonical reference for all slide edits regardless of which template you're working in.
+- **Frontend design** — when touching CSS: use `:root` tokens only, no raw hex values, preserve contrast ratios, and keep `prefers-reduced-motion` rules intact.
+
+---
+
 ## The Task
 
 You are building a slide deck from a template. The flow is:
