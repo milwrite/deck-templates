@@ -6,15 +6,15 @@ A set of minimal, no-build slide deck templates for workshops and presentations.
 
 | Directory | Engine | Style |
 |---|---|---|
-| `template/` | Custom deck engine | Light/dark split-screen with carousels, step reveal, tab components |
-| `template-reveal/` | [Reveal.js](https://revealjs.com) (CDN) | Dark, timing badges, vertical slide groups |
-| `template-zmuhls/` | Custom deck engine | Dark, two-panel content+stage, fragment step-grids |
+| `split-light/` | Custom deck engine | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates |
+| `reveal-talk/` | [Reveal.js](https://revealjs.com) (CDN) | Dark, facilitator timing badges, vertical slide groups, speaker notes, print-to-PDF |
+| `dark-panel/` | Custom deck engine | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists, self-contained single file |
 
 ## Quickstart
 
 ```bash
 git clone https://github.com/zmuhls/deck-templates.git
-cd deck-templates/template          # or template-reveal/ or template-zmuhls/
+cd deck-templates/split-light       # or reveal-talk/ or dark-panel/
 open index.html                     # macOS
 xdg-open index.html                 # Linux
 # Windows: just double-click index.html
@@ -24,9 +24,20 @@ No dependencies to install. Edit `index.html`, save, reload.
 
 ## Choosing a Template
 
-- **`template/`** — best for multi-section workshops with screenshots, carousels, and copyable exercise templates. Light background, accessible by default, full nav bar with scrubber.
-- **`template-reveal/`** — best for conference talks or faculty presentations where Reveal.js features (vertical slides, speaker notes, `?print-pdf`) are useful. Loads Reveal.js from CDN.
-- **`template-zmuhls/`** — best for compact, scroll-friendly presentations with numbered step reveals and side-by-side comparison panels. Dark theme, system font stack, mobile-friendly.
+- **`split-light/`** — best for multi-section workshops with screenshots, carousels, and copyable exercise templates. Light background, full nav bar with scrubber, accessible by default.
+- **`reveal-talk/`** — best for conference talks or faculty presentations where Reveal.js features (vertical slides, speaker notes, `?print-pdf`) are useful. Loads Reveal.js from CDN.
+- **`dark-panel/`** — best for compact presentations with sequential step reveals and side-by-side comparison panels. Dark theme, system font stack, all CSS/JS inline, mobile-friendly.
+
+## Slide Layouts (`split-light/`)
+
+| Class | Description |
+|---|---|
+| `layout-split` | Left content panel + right stage panel |
+| `layout-content` | Single column, light background |
+| `layout-full-dark` | Centered, dark background |
+| `layout-divider` | Section break, large heading |
+| `layout-grid` | Card grid layout |
+| `title-slide` | Opening/closing slide |
 
 ## Editing Slides
 
@@ -50,17 +61,6 @@ Each template uses commented slide blocks as a guide:
 ```
 
 Replace `[bracketed placeholders]` with your content. Duplicate a slide block to add slides; delete to remove.
-
-## Slide Layouts (`template/`)
-
-| Class | Description |
-|---|---|
-| `layout-split` | Left content panel + right stage panel |
-| `layout-content` | Single column, light background |
-| `layout-full-dark` | Centered, dark background |
-| `layout-divider` | Section break, large heading |
-| `layout-grid` | Card grid layout |
-| `title-slide` | Opening/closing slide |
 
 ## Accessibility
 
