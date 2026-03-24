@@ -22,10 +22,10 @@ That's it. No package installs. No build step. Open `index.html` in a browser wh
 
 | Directory | Style | Best for |
 |---|---|---|
-| `workshop/` | Light split-screen, carousels, exercise templates | Multi-section workshops with screenshots and hands-on activities |
-| `minimal/` | Dark two-panel, fragment step-grids, single file | Compact talks, roundtables, sequential reveals |
+| `dynamic-light/` | Light split-screen, carousels, exercise templates | Multi-section workshops with screenshots and hands-on activities |
+| `two-panel-dark/` | Dark two-panel, fragment step-grids, single file | Compact talks, roundtables, sequential reveals |
 
-When in doubt: `workshop/` for structured multi-part workshops; `minimal/` for everything else.
+When in doubt: `dynamic-light/` for structured multi-part workshops; `two-panel-dark/` for everything else.
 
 ---
 
@@ -33,7 +33,7 @@ When in doubt: `workshop/` for structured multi-part workshops; `minimal/` for e
 
 ```
 deck-templates/
-├── workshop/
+├── dynamic-light/
 │   ├── index.html          ← source of truth — all slide content lives here
 │   ├── SLIDES.md           ← markdown mirror — keep in sync after edits
 │   ├── CLAUDE.md           ← full agent guide for this template (read this first)
@@ -47,7 +47,7 @@ deck-templates/
 │   │   ├── scrubber.js     ← scrubber timeline + ARIA
 │   │   └── deck-engine.js  ← core navigation (load last — do not reorder)
 │   └── images/             ← slide images go here: slideN-letter.png
-└── minimal/
+└── two-panel-dark/
     ├── index.html          ← the only file — all CSS and JS are inline
     ├── SLIDES.md           ← markdown mirror — keep in sync after edits
     └── CLAUDE.md           ← full agent guide for this template (read this first)
@@ -62,7 +62,7 @@ deck-templates/
 git clone https://github.com/zmuhls/deck-templates.git
 
 # Copy your chosen template into a new project repo
-cp -r deck-templates/workshop/ ~/my-new-talk
+cp -r deck-templates/dynamic-light/ ~/my-new-talk
 cd ~/my-new-talk
 git init && git add . && git commit -m "init from deck-templates/workshop"
 ```
@@ -76,7 +76,7 @@ No install step. Open `index.html` directly in a browser.
 ### Claude Code (recommended)
 
 ```bash
-cd workshop/    # or minimal/
+cd dynamic-light/    # or two-panel-dark/
 claude --permission-mode bypassPermissions --print 'Your task here'
 ```
 
@@ -99,7 +99,7 @@ Replace the carousel on slide 4 with a screenshot-placeholder block. The image i
 ### Codex
 
 ```bash
-cd workshop/    # or minimal/
+cd dynamic-light/    # or two-panel-dark/
 codex exec --full-auto 'Fill in the deck for a workshop on AI in higher education. Replace all placeholders with real content. Follow CLAUDE.md conventions.'
 ```
 
@@ -147,15 +147,15 @@ These apply to both templates. The per-template `CLAUDE.md` adds template-specif
 4. Sync `SLIDES.md`
 5. Commit
 
-### Add a step-reveal element (`workshop/`)
+### Add a step-reveal element (`dynamic-light/`)
 
 Add `class="step-hidden" data-step` to any element. The deck engine reveals these one at a time on forward advance and resets them when leaving the slide.
 
-### Add a fragment reveal (`minimal/`)
+### Add a fragment reveal (`two-panel-dark/`)
 
 Add `class="frag"` to any element inside `.stage`. Fragments reveal one at a time on advance; navigating back reveals all of them at once.
 
-### Add a carousel (`workshop/` only)
+### Add a carousel (`dynamic-light/` only)
 
 ```html
 <div class="carousel" data-interval="8000">
@@ -175,8 +175,8 @@ Add `class="frag"` to any element inside `.stage`. Fragments reveal one at a tim
 
 ### Change the color theme
 
-- **`workshop/`**: edit `:root` in `css/styles.css`
-- **`minimal/`**: edit `:root` in the `<style>` block at the top of `index.html`
+- **`dynamic-light/`**: edit `:root` in `css/styles.css`
+- **`two-panel-dark/`**: edit `:root` in the `<style>` block at the top of `index.html`
 
 Key tokens: `--bg-light` / `--dark-bg`, `--accent-cyan`, `--accent-blue`, `--text-dark`, `--text-muted`.
 
@@ -190,5 +190,5 @@ git push origin main
 
 # Local preview
 python3 -m http.server 8000
-# visit http://localhost:8000/workshop/  or  http://localhost:8000/minimal/
+# visit http://localhost:8000/dynamic-light/  or  http://localhost:8000/two-panel-dark/
 ```

@@ -6,14 +6,14 @@ Two minimal, no-build slide deck templates for workshops and presentations. Open
 
 | Directory | Style | Best for |
 |---|---|---|
-| `workshop/` | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates | Multi-section workshops with screenshots and hands-on activities |
-| `minimal/` | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists; single self-contained file | Compact talks, roundtables, sequential step reveals |
+| `dynamic-light/` | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates | Multi-section workshops with screenshots and hands-on activities |
+| `two-panel-dark/` | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists; single self-contained file | Compact talks, roundtables, sequential step reveals |
 
 ## Quickstart
 
 ```bash
 git clone https://github.com/zmuhls/deck-templates.git
-cd deck-templates/workshop      # or minimal/
+cd deck-templates/dynamic-light    # or two-panel-dark/
 open index.html                 # macOS
 xdg-open index.html             # Linux
 # Windows: double-click index.html
@@ -44,7 +44,7 @@ Each template uses commented slide blocks as a guide:
 
 Replace `[bracketed placeholders]` with your content. Duplicate a slide block to add slides; delete to remove. See `CLAUDE.md` in each template directory for the full agent-ready guide.
 
-## Slide Layouts (`workshop/`)
+## Slide Layouts (`dynamic-light/`)
 
 | Class | Description |
 |---|---|
@@ -55,7 +55,7 @@ Replace `[bracketed placeholders]` with your content. Duplicate a slide block to
 | `layout-divider` | Section break, large heading |
 | `layout-grid` | Two-column card grid |
 
-## Slide Types (`minimal/`)
+## Slide Types (`two-panel-dark/`)
 
 | Stage pattern | Use for |
 |---|---|

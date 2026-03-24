@@ -1,4 +1,4 @@
-# CLAUDE.md — minimal
+# CLAUDE.md — two-panel-dark
 
 This file is the primary reference for any agent working in this directory. Read it fully before editing any file.
 
@@ -40,7 +40,7 @@ Best for compact presentations, roundtables, talks with sequential step reveals,
 ## File Structure
 
 ```
-minimal/
+two-panel-dark/
 ├── index.html    ← the only file — all slides, CSS (<style>), and JS (<script>) are here
 ├── SLIDES.md     ← markdown mirror of slide content — keep in sync
 └── CLAUDE.md     ← this file

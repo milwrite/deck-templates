@@ -1,4 +1,4 @@
-# CLAUDE.md — workshop
+# CLAUDE.md — dynamic-light
 
 This file is the primary reference for any agent working in this directory. Read it fully before editing any file.
 
@@ -39,7 +39,7 @@ A template for a workshop or presentation series. Single-page HTML slide deck wi
 ## File Structure
 
 ```
-workshop/
+dynamic-light/
 ├── index.html          ← source of truth for all slide content
 ├── SLIDES.md           ← markdown mirror of index.html — keep in sync
 ├── CLAUDE.md           ← this file
