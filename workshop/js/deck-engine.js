@@ -50,10 +50,12 @@
 
     // Hide watermark on title (first) and closing (last) slides
     var logo = document.getElementById('logoWatermark');
-    if (current === 0 || current === total - 1) {
-      logo.classList.add('hidden');
-    } else {
-      logo.classList.remove('hidden');
+    if (logo) {
+      if (current === 0 || current === total - 1) {
+        logo.classList.add('hidden');
+      } else {
+        logo.classList.remove('hidden');
+      }
     }
 
     // Carousel management

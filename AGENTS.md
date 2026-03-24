@@ -1,179 +1,194 @@
-# AGENTS.md — Working with CLI Coding Agents
+# AGENTS.md
 
-This file tells Claude Code, Codex, and other CLI agents how to work with this repository. If you're a human, it also tells you how to prompt agents effectively for slide work.
+This file tells Claude Code, Codex, and other CLI agents how to work with this repository. Each template directory has its own `CLAUDE.md` with complete per-template guidance — this file covers the repo-level workflow.
+
+---
+
+## The Task
+
+You are building a slide deck from a template. The flow is:
+
+1. Clone or copy a template directory into a new repo
+2. Read the template's `CLAUDE.md` fully before touching anything
+3. Fill in `index.html` by replacing `[bracketed placeholders]` with real content
+4. Sync `SLIDES.md` to mirror the final content
+5. Commit
+
+That's it. No package installs. No build step. Open `index.html` in a browser when done.
+
+---
+
+## Choosing a Template
+
+| Directory | Style | Best for |
+|---|---|---|
+| `workshop/` | Light split-screen, carousels, exercise templates | Multi-section workshops with screenshots and hands-on activities |
+| `minimal/` | Dark two-panel, fragment step-grids, single file | Compact talks, roundtables, sequential reveals |
+
+When in doubt: `workshop/` for structured multi-part workshops; `minimal/` for everything else.
+
+---
 
 ## Repository Structure
 
 ```
 deck-templates/
-├── workshop/            # Custom deck engine — light split-screen
-│   ├── index.html          # All slides live here — source of truth
-│   ├── SLIDES.md           # Markdown mirror of index.html — keep in sync
-│   ├── CLAUDE.md           # Per-template agent guidance
+├── workshop/
+│   ├── index.html          ← source of truth — all slide content lives here
+│   ├── SLIDES.md           ← markdown mirror — keep in sync after edits
+│   ├── CLAUDE.md           ← full agent guide for this template (read this first)
 │   ├── css/
-│   │   ├── styles.css      # Design tokens, layout, components, typography
-│   │   ├── responsive.css  # Breakpoint overrides
-│   │   └── animations.css  # Keyframes + prefers-reduced-motion
+│   │   ├── styles.css      ← design tokens, layout, all components
+│   │   ├── responsive.css  ← breakpoint overrides
+│   │   └── animations.css  ← keyframes + prefers-reduced-motion
 │   ├── js/
-│   │   ├── tabs.js
-│   │   ├── carousel.js
-│   │   ├── scrubber.js
-│   │   └── deck-engine.js  # Core navigation — load last
-│   └── images/
-│   ├── index.html
-│   ├── SLIDES.md
-│   └── CLAUDE.md
-└── minimal/             # Custom engine — dark two-panel, all inline
-    ├── index.html          # All CSS and JS inline — single file
-    ├── SLIDES.md
-    └── CLAUDE.md
+│   │   ├── tabs.js         ← tab component
+│   │   ├── carousel.js     ← auto-advancing carousel
+│   │   ├── scrubber.js     ← scrubber timeline + ARIA
+│   │   └── deck-engine.js  ← core navigation (load last — do not reorder)
+│   └── images/             ← slide images go here: slideN-letter.png
+└── minimal/
+    ├── index.html          ← the only file — all CSS and JS are inline
+    ├── SLIDES.md           ← markdown mirror — keep in sync after edits
+    └── CLAUDE.md           ← full agent guide for this template (read this first)
 ```
+
+---
 
 ## Cloning and Setup
 
 ```bash
+# Clone the repo
 git clone https://github.com/zmuhls/deck-templates.git
-cd deck-templates
-# No install step. Open index.html in a browser.
+
+# Copy your chosen template into a new project repo
+cp -r deck-templates/workshop/ ~/my-new-talk
+cd ~/my-new-talk
+git init && git add . && git commit -m "init from deck-templates/workshop"
 ```
 
-For a new presentation, copy the relevant template directory into its own repo:
+No install step. Open `index.html` directly in a browser.
 
-```bash
-cd ~/my-workshop
-git init && git add . && git commit -m "init from deck-templates"
-```
+---
 
-## How to Prompt an Agent
+## Agent Workflow
 
 ### Claude Code (recommended)
 
 ```bash
+cd workshop/    # or minimal/
 claude --permission-mode bypassPermissions --print 'Your task here'
 ```
 
-Claude Code reads `CLAUDE.md` automatically. You do not need to paste the style guide into your prompt — just describe what you want.
+Claude Code reads `CLAUDE.md` automatically. Do not paste the whole guide into your prompt — just state the task. Reference `CLAUDE.md` in your prompt if you need the agent to follow a specific convention.
 
 **Example prompts:**
 
 ```
-Add a new section divider slide after slide 6 for "Part II: Hands-On Work". Follow all conventions in CLAUDE.md.
+Fill in the deck for a 90-minute workshop on retrieval-augmented generation. Use the slide structure already in index.html. Replace all [bracketed placeholders] with appropriate content. Keep SLIDES.md in sync. Follow all conventions in CLAUDE.md.
 ```
 
 ```
-Replace slides 3 through 5 with a single two-column layout comparing zero-shot and few-shot prompting. Add relevant placeholder content. Keep SLIDES.md in sync.
+Add a two-column comparison slide after slide 5 contrasting zero-shot and few-shot prompting. Use layout-split. Follow conventions in CLAUDE.md.
 ```
 
 ```
-The carousel on slide 4 has three images. Add a fourth image placeholder (images/slide4-d.png) with caption "Step 4: Review the output".
+Replace the carousel on slide 4 with a screenshot-placeholder block. The image isn't ready yet. Update alt text and caption. Sync SLIDES.md.
 ```
 
 ### Codex
 
 ```bash
-codex exec --full-auto 'Add a closing slide with a thank-you heading and placeholder contact info. Follow conventions in CLAUDE.md.'
+cd workshop/    # or minimal/
+codex exec --full-auto 'Fill in the deck for a workshop on AI in higher education. Replace all placeholders with real content. Follow CLAUDE.md conventions.'
 ```
 
-### Key Rules for All Agents
+---
 
-1. **Read `CLAUDE.md` first.** It has layout names, accessibility requirements, commit conventions, and component patterns. Do not guess — look it up.
+## Universal Rules for All Agents
 
-2. **`index.html` is the source of truth.** All slide content lives there. `SLIDES.md` is a markdown mirror — update it after any content edit.
+These apply to both templates. The per-template `CLAUDE.md` adds template-specific details.
 
-3. **Accessibility is not optional.** Every slide div needs `role="group" aria-roledescription="slide" aria-label="Slide N: Title" tabindex="-1"`. When you add or remove a slide, renumber everything downstream.
+1. **Read `CLAUDE.md` before editing anything.** Both templates have complete guidance including layout names, component patterns, accessibility requirements, and step-by-step task checklists.
 
-4. **Commit conventions:** short, lowercase messages. No `Co-Authored-By` lines. No sign-off trailers.
+2. **`index.html` is the only source of truth for slide content.** `SLIDES.md` is a mirror — keep it synced, but if there's a conflict, `index.html` wins.
 
-5. **No em dashes** in slide content. Use commas, colons, or rewrite the sentence.
+3. **Accessibility is non-negotiable.** Every slide element needs the correct ARIA attributes. When you add or remove slides, renumber all downstream `aria-label` values and update the scrubber's total count. Details in each template's `CLAUDE.md`.
 
-6. **Don't touch `deck-engine.js` unless the task is explicitly about navigation behavior.** It manages focus, live regions, and step reveal — easy to break.
+4. **No em dashes.** Use commas, colons, or restructure the sentence.
 
-7. **When adding images**, use `images/slideN-letter.png` naming (e.g., `slide7-a.png`). Add accessible `alt` text. If the image doesn't exist yet, use a `<div class="screenshot-placeholder">` instead.
+5. **Commit conventions:** short lowercase messages, no `Co-Authored-By`, no sign-off trailers.
 
-8. **Design tokens are in `css/styles.css` `:root`.** Prefer token references (`var(--accent-cyan)`) over raw hex values.
+6. **Do not restructure files.** Don't add new CSS files, rename JS modules, or change the load order of scripts. The templates are designed to be edited in place.
+
+7. **Images** go in `images/` using `slideN-letter.png` naming (e.g. `slide4-a.png`). If an image isn't available, use a `<div class="screenshot-placeholder">` — both templates have this component.
+
+8. **Use design tokens, not raw hex values.** Both templates define color tokens in `:root`. Prefer `var(--accent-cyan)` over `#4ECDC4`.
+
+---
 
 ## Common Tasks
 
-### Add a new slide
+### Add a slide
 
 1. Find the right insertion point in `index.html`
-2. Copy the nearest slide block of the same layout type
-3. Replace content and increment `aria-label="Slide N: ..."` for this slide and all following
-4. Update `aria-valuemax` on the scrubber container to the new total
-5. Sync `SLIDES.md`
-6. Commit
+2. Copy the nearest slide block of the same type
+3. Update `aria-label="Slide N: ..."` on this slide and all that follow
+4. Update the scrubber total (see each template's `CLAUDE.md` for the exact attribute to change)
+5. Fill in content
+6. Sync `SLIDES.md`
+7. Commit
 
 ### Remove a slide
 
-1. Delete the slide div block
-2. Renumber all downstream `aria-label` values
-3. Update `aria-valuemax` on the scrubber
+1. Delete the full slide block
+2. Renumber downstream `aria-label` values
+3. Update the scrubber total
 4. Sync `SLIDES.md`
 5. Commit
 
-### Change the color theme
+### Add a step-reveal element (`workshop/`)
 
-Edit `:root` in `css/styles.css`. The main tokens:
+Add `class="step-hidden" data-step` to any element. The deck engine reveals these one at a time on forward advance and resets them when leaving the slide.
 
-```css
---bg-light         /* slide background (light layouts) */
---dark-bg          /* dark layouts, title/closing slides */
---accent-cyan      /* primary accent — bullet dots, labels, progress bar */
---accent-blue      /* secondary accent — cards, roadmap items */
---text-dark        /* body text on light backgrounds */
---text-muted       /* secondary text */
-```
+### Add a fragment reveal (`minimal/`)
 
-### Add a step-reveal element
+Add `class="frag"` to any element inside `.stage`. Fragments reveal one at a time on advance; navigating back reveals all of them at once.
 
-Add `class="step-hidden" data-step` to any element inside a slide. The deck engine will reveal these one at a time on forward navigation, and reset them when leaving the slide. Works on any element: `<h3>`, `<div>`, `.prompt-block`, etc.
-
-### Add a carousel
+### Add a carousel (`workshop/` only)
 
 ```html
 <div class="carousel" data-interval="8000">
   <div class="carousel-item active">
-    <img src="images/slideN-a.png" alt="[Description]">
-    <div class="carousel-caption"><strong>[Step Title]</strong><br>[Caption text]</div>
+    <img src="images/slideN-a.png" alt="[Alt text]">
+    <div class="carousel-caption"><strong>[Step]</strong><br>[Caption]</div>
   </div>
   <div class="carousel-item">
-    <img src="images/slideN-b.png" alt="[Description]">
-    <div class="carousel-caption"><strong>[Step Title]</strong><br>[Caption text]</div>
+    <img src="images/slideN-b.png" alt="[Alt text]">
+    <div class="carousel-caption"><strong>[Step]</strong><br>[Caption]</div>
   </div>
   <div class="carousel-dots"></div>
 </div>
 ```
 
-Place inside a `.stage` panel. `data-interval` is auto-advance in milliseconds; omit to disable auto-advance.
+`data-interval` is auto-advance in milliseconds. Omit it to disable auto-advance.
 
-## Per-Template Notes
+### Change the color theme
 
-### `workshop/` (custom engine, light split-screen)
-- JS load order matters: tabs → carousel → scrubber → deck-engine
-- Inline `copyTemplate(id)` script in `index.html` handles clipboard for exercise templates
-- Logo watermark: replace `src` in `<img class="logo-watermark">` or remove the element
-- Best for: multi-section workshops, screenshot walkthroughs, hands-on exercises
+- **`workshop/`**: edit `:root` in `css/styles.css`
+- **`minimal/`**: edit `:root` in the `<style>` block at the top of `index.html`
 
-- Add `data-timing="N"` (seconds) to each `<section>` to show facilitator timing badges
-- Use nested `<section>` inside `<section>` for vertical slide groups
-- Speaker notes: add `<aside class="notes">...</aside>` inside any section
-- Print to PDF: append `?print-pdf` to the URL, then print from browser
-- Best for: conference talks, faculty presentations, anything needing print output
+Key tokens: `--bg-light` / `--dark-bg`, `--accent-cyan`, `--accent-blue`, `--text-dark`, `--text-muted`.
 
-### `minimal/` (custom engine, dark two-panel, all inline)
-- All CSS and JS are inline in `index.html` — no separate files to manage
-- Fragment reveal uses `.frag` class with a `visible` class toggled by JS
-- Stage panels use absolute positioning at tablet+ breakpoints; leave `.stage` wrappers intact
-- Swipe navigation and trackpad gestures built in
-- Best for: compact presentations, roundtables, talks with progressive step reveals
+---
 
 ## Deployment
 
 ```bash
-# Push to GitHub Pages
+# GitHub Pages: push and enable in repo settings (source: main branch, root dir)
 git push origin main
-# Then enable Pages in repo settings → source: main branch, root directory
 
-# Preview locally
+# Local preview
 python3 -m http.server 8000
+# visit http://localhost:8000/workshop/  or  http://localhost:8000/minimal/
 ```

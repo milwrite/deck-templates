@@ -1,40 +1,25 @@
 # deck-templates
 
-A set of minimal, no-build slide deck templates for workshops and presentations. Open an `index.html` in a browser and you're presenting. No npm, no bundler, no server required.
+Two minimal, no-build slide deck templates for workshops and presentations. Open an `index.html` in a browser and you're presenting. No npm, no bundler, no server required.
 
 ## Templates
 
-| Directory | Engine | Style |
+| Directory | Style | Best for |
 |---|---|---|
-| `workshop/` | Custom deck engine | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates |
-| `minimal/` | Custom deck engine | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists, self-contained single file |
+| `workshop/` | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates | Multi-section workshops with screenshots and hands-on activities |
+| `minimal/` | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists; single self-contained file | Compact talks, roundtables, sequential step reveals |
 
 ## Quickstart
 
 ```bash
 git clone https://github.com/zmuhls/deck-templates.git
-open index.html                     # macOS
-xdg-open index.html                 # Linux
-# Windows: just double-click index.html
+cd deck-templates/workshop      # or minimal/
+open index.html                 # macOS
+xdg-open index.html             # Linux
+# Windows: double-click index.html
 ```
 
 No dependencies to install. Edit `index.html`, save, reload.
-
-## Choosing a Template
-
-- **`workshop/`** — best for multi-section workshops with screenshots, carousels, and copyable exercise templates. Light background, full nav bar with scrubber, accessible by default.
-- **`minimal/`** — best for compact presentations with sequential step reveals and side-by-side comparison panels. Dark theme, system font stack, all CSS/JS inline, mobile-friendly.
-
-## Slide Layouts (`workshop/`)
-
-| Class | Description |
-|---|---|
-| `layout-split` | Left content panel + right stage panel |
-| `layout-content` | Single column, light background |
-| `layout-full-dark` | Centered, dark background |
-| `layout-divider` | Section break, large heading |
-| `layout-grid` | Card grid layout |
-| `title-slide` | Opening/closing slide |
 
 ## Editing Slides
 
@@ -57,36 +42,51 @@ Each template uses commented slide blocks as a guide:
 </div>
 ```
 
-Replace `[bracketed placeholders]` with your content. Duplicate a slide block to add slides; delete to remove.
+Replace `[bracketed placeholders]` with your content. Duplicate a slide block to add slides; delete to remove. See `CLAUDE.md` in each template directory for the full agent-ready guide.
+
+## Slide Layouts (`workshop/`)
+
+| Class | Description |
+|---|---|
+| `title-slide` | Opening/closing slide |
+| `layout-split` | Left content panel + right stage panel |
+| `layout-content` | Single column, light background |
+| `layout-full-dark` | Centered, dark background |
+| `layout-divider` | Section break, large heading |
+| `layout-grid` | Two-column card grid |
+
+## Slide Types (`minimal/`)
+
+| Stage pattern | Use for |
+|---|---|
+| `.step-grid` > `.step-row.frag` | Sequential numbered reveals |
+| `.stageCompare` > two `.col` divs | Two-way contrasts |
+| `.res-wrap` > `.res-group` | Links and references |
+| `.stage-fill` > `iframe` | Live embed or demo |
 
 ## Accessibility
 
-All templates are built to WCAG 2.1 AA:
-- Every slide needs `role="group" aria-roledescription="slide" aria-label="Slide N: Title" tabindex="-1"`
-- When adding or removing slides, renumber `aria-label` values and update the scrubber's `aria-valuemax`
-- Decorative emoji use `aria-hidden="true"`
-- `#slide-announcer` provides live-region narration for screen readers
-
-## Deploying
-
-These are static files. Any host works:
-
-```bash
-# GitHub Pages (push and enable Pages in repo settings)
-git push origin main
-
-# Local server (if you need relative paths to behave)
-python3 -m http.server 8000
-npx serve .
-```
+Both templates are built to WCAG 2.1 AA. Every slide needs the correct ARIA attributes — see `CLAUDE.md` for exact requirements. When adding or removing slides, renumber `aria-label` values and update the scrubber total.
 
 ## Working with a Coding Agent
 
 See `AGENTS.md` for instructions on delegating slide edits to Claude Code, Codex, or other CLI agents.
+
+## Deploying
+
+Static files — any host works:
+
+```bash
+# GitHub Pages: push and enable in repo settings
+git push origin main
+
+# Local preview
+python3 -m http.server 8000
+npx serve .
+```
 
 ## Conventions
 
 - No em dashes in slide content
 - Commit messages: short, lowercase, no sign-off
 - `SLIDES.md` in each template is a markdown mirror of `index.html` — keep in sync after edits
-- Each template has a `CLAUDE.md` with per-template agent guidance
