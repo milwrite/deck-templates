@@ -6,7 +6,7 @@ This file tells Claude Code, Codex, and other CLI agents how to work with this r
 
 ```
 deck-templates/
-├── split-light/            # Custom deck engine — light split-screen
+├── reveal-split/            # Custom deck engine — light split-screen
 │   ├── index.html          # All slides live here — source of truth
 │   ├── SLIDES.md           # Markdown mirror of index.html — keep in sync
 │   ├── CLAUDE.md           # Per-template agent guidance
@@ -20,11 +20,11 @@ deck-templates/
 │   │   ├── scrubber.js
 │   │   └── deck-engine.js  # Core navigation — load last
 │   └── images/
-├── reveal-talk/            # Reveal.js — dark, timing badges, print-to-PDF
+├── reveal-js/            # Reveal.js — dark, timing badges, print-to-PDF
 │   ├── index.html
 │   ├── SLIDES.md
 │   └── CLAUDE.md
-└── dark-panel/             # Custom engine — dark two-panel, all inline
+└── reveal-panel/             # Custom engine — dark two-panel, all inline
     ├── index.html          # All CSS and JS inline — single file
     ├── SLIDES.md
     └── CLAUDE.md
@@ -41,7 +41,7 @@ cd deck-templates
 For a new presentation, copy the relevant template directory into its own repo:
 
 ```bash
-cp -r split-light/ ~/my-workshop    # or reveal-talk/ or dark-panel/
+cp -r reveal-split/ ~/my-workshop    # or reveal-js/ or reveal-panel/
 cd ~/my-workshop
 git init && git add . && git commit -m "init from deck-templates"
 ```
@@ -51,7 +51,7 @@ git init && git add . && git commit -m "init from deck-templates"
 ### Claude Code (recommended)
 
 ```bash
-cd split-light/    # or reveal-talk/ or dark-panel/
+cd reveal-split/    # or reveal-js/ or reveal-panel/
 claude --permission-mode bypassPermissions --print 'Your task here'
 ```
 
@@ -74,7 +74,7 @@ The carousel on slide 4 has three images. Add a fourth image placeholder (images
 ### Codex
 
 ```bash
-cd split-light/    # or reveal-talk/ or dark-panel/
+cd reveal-split/    # or reveal-js/ or reveal-panel/
 codex exec --full-auto 'Add a closing slide with a thank-you heading and placeholder contact info. Follow conventions in CLAUDE.md.'
 ```
 
@@ -152,20 +152,20 @@ Place inside a `.stage` panel. `data-interval` is auto-advance in milliseconds; 
 
 ## Per-Template Notes
 
-### `split-light/` (custom engine, light split-screen)
+### `reveal-split/` (custom engine, light split-screen)
 - JS load order matters: tabs → carousel → scrubber → deck-engine
 - Inline `copyTemplate(id)` script in `index.html` handles clipboard for exercise templates
 - Logo watermark: replace `src` in `<img class="logo-watermark">` or remove the element
 - Best for: multi-section workshops, screenshot walkthroughs, hands-on exercises
 
-### `reveal-talk/` (Reveal.js, dark)
+### `reveal-js/` (Reveal.js, dark)
 - Add `data-timing="N"` (seconds) to each `<section>` to show facilitator timing badges
 - Use nested `<section>` inside `<section>` for vertical slide groups
 - Speaker notes: add `<aside class="notes">...</aside>` inside any section
 - Print to PDF: append `?print-pdf` to the URL, then print from browser
 - Best for: conference talks, faculty presentations, anything needing print output
 
-### `dark-panel/` (custom engine, dark two-panel, all inline)
+### `reveal-panel/` (custom engine, dark two-panel, all inline)
 - All CSS and JS are inline in `index.html` — no separate files to manage
 - Fragment reveal uses `.frag` class with a `visible` class toggled by JS
 - Stage panels use absolute positioning at tablet+ breakpoints; leave `.stage` wrappers intact
@@ -181,5 +181,5 @@ git push origin main
 
 # Preview locally
 python3 -m http.server 8000
-# Visit http://localhost:8000/split-light/  (or /reveal-talk/ or /dark-panel/)
+# Visit http://localhost:8000/reveal-split/  (or /reveal-js/ or /reveal-panel/)
 ```
