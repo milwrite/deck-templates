@@ -6,15 +6,13 @@ A set of minimal, no-build slide deck templates for workshops and presentations.
 
 | Directory | Engine | Style |
 |---|---|---|
-| `reveal-split/` | Custom deck engine | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates |
-| `reveal-js/` | [Reveal.js](https://revealjs.com) (CDN) | Dark, facilitator timing badges, vertical slide groups, speaker notes, print-to-PDF |
-| `reveal-panel/` | Custom deck engine | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists, self-contained single file |
+| `workshop/` | Custom deck engine | Light split-screen: left content panel, right stage; carousels, step reveal, copyable exercise templates |
+| `minimal/` | Custom deck engine | Dark two-panel: numbered fragment step-grids, side-by-side compare, resource lists, self-contained single file |
 
 ## Quickstart
 
 ```bash
 git clone https://github.com/zmuhls/deck-templates.git
-cd deck-templates/split-light       # or reveal-js/ or reveal-panel/
 open index.html                     # macOS
 xdg-open index.html                 # Linux
 # Windows: just double-click index.html
@@ -24,11 +22,10 @@ No dependencies to install. Edit `index.html`, save, reload.
 
 ## Choosing a Template
 
-- **`reveal-split/`** — best for multi-section workshops with screenshots, carousels, and copyable exercise templates. Light background, full nav bar with scrubber, accessible by default.
-- **`reveal-js/`** — best for conference talks or faculty presentations where Reveal.js features (vertical slides, speaker notes, `?print-pdf`) are useful. Loads Reveal.js from CDN.
-- **`reveal-panel/`** — best for compact presentations with sequential step reveals and side-by-side comparison panels. Dark theme, system font stack, all CSS/JS inline, mobile-friendly.
+- **`workshop/`** — best for multi-section workshops with screenshots, carousels, and copyable exercise templates. Light background, full nav bar with scrubber, accessible by default.
+- **`minimal/`** — best for compact presentations with sequential step reveals and side-by-side comparison panels. Dark theme, system font stack, all CSS/JS inline, mobile-friendly.
 
-## Slide Layouts (`reveal-split/`)
+## Slide Layouts (`workshop/`)
 
 | Class | Description |
 |---|---|
