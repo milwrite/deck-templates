@@ -74,15 +74,25 @@ See `AGENTS.md` for instructions on delegating slide edits to Claude Code, Codex
 
 ## Deploying
 
-Static files — any host works:
+Static files — any host works. For GitHub Pages via the CLI:
 
 ```bash
-# GitHub Pages: push and enable in repo settings
-git push origin main
+# Authenticate (one-time)
+gh auth login
 
+# Create repo and push
+gh repo create my-presentation --public --source=. --push
+
+# Enable GitHub Pages
+gh api --method POST repos/OWNER/my-presentation/pages \
+  -f 'source[branch]=main' -f 'source[path]=/'
+```
+
+See `AGENTS.md` for the full step-by-step deployment guide, including troubleshooting.
+
+```bash
 # Local preview
 python3 -m http.server 8000
-npx serve .
 ```
 
 ## Conventions
