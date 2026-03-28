@@ -193,11 +193,85 @@ Key tokens: `--bg-light` / `--dark-bg`, `--accent-cyan`, `--accent-blue`, `--tex
 
 ## Deployment
 
-```bash
-# GitHub Pages: push and enable in repo settings (source: main branch, root dir)
-git push origin main
+### Prerequisites: GitHub CLI Authentication
 
-# Local preview
+The `gh` CLI must be authenticated before creating repos or enabling Pages. If not already set up:
+
+```bash
+# Interactive login (opens browser for OAuth)
+gh auth login
+
+# Or with a personal access token
+echo "ghp_yourtoken" | gh auth login --with-token
+
+# Verify authentication
+gh auth status
+```
+
+Minimum required scopes: `repo`, `read:org`, `gist`. For Pages API access, the token also needs the `repo` scope (which covers it).
+
+### Full Deploy: From Template to Live Site
+
+This is the complete sequence for creating a new presentation from a template, pushing it as a new repo, and enabling GitHub Pages:
+
+```bash
+# 1. Clone deck-templates and copy the template you want
+git clone https://github.com/zmuhls/deck-templates.git
+cp -r deck-templates/dynamic-light/ ~/my-presentation    # or two-panel-dark/
+cd ~/my-presentation
+
+# 2. Initialize as a new git repo
+git init
+git add .
+git commit -m "init from deck-templates/dynamic-light"
+
+# 3. Create the GitHub repo and push
+gh repo create my-presentation --public --source=. --push
+
+# 4. Enable GitHub Pages (main branch, root directory)
+gh api --method POST repos/OWNER/my-presentation/pages \
+  -f 'source[branch]=main' -f 'source[path]=/'
+
+# 5. Verify Pages is configured
+gh api repos/OWNER/my-presentation/pages --jq '.html_url'
+# → https://OWNER.github.io/my-presentation/
+```
+
+Replace `OWNER` with the GitHub username or org (e.g. `zmuhls`, `milwrite`).
+
+### Deploying an Existing Repo
+
+If the repo already exists and you just need to enable Pages:
+
+```bash
+# Enable Pages
+gh api --method POST repos/OWNER/REPO/pages \
+  -f 'source[branch]=main' -f 'source[path]=/'
+
+# Check status
+gh api repos/OWNER/REPO/pages --jq '{url: .html_url, status: .status}'
+```
+
+### Updating a Deployed Deck
+
+After editing slides, just push:
+
+```bash
+git add -A
+git commit -m "update slides"
+git push origin main
+# Pages rebuilds automatically on push (typically <60 seconds)
+```
+
+### Local Preview
+
+```bash
 python3 -m http.server 8000
 # visit http://localhost:8000/dynamic-light/  or  http://localhost:8000/two-panel-dark/
 ```
+
+### Troubleshooting
+
+- **`gh: Not Found (HTTP 404)` on Pages API** — the repo may be private. Pages requires a public repo on free plans, or a Pro/Team/Enterprise plan for private repo Pages.
+- **`gh auth` fails** — run `gh auth login` interactively to re-authenticate. Make sure the token has `repo` scope.
+- **Pages shows 404 after enabling** — wait 1-2 minutes for the initial build. Check `gh api repos/OWNER/REPO/pages --jq '.status'` for build status.
